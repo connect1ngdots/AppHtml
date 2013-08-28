@@ -4,7 +4,7 @@
 	var json = {}, ssMax = 0, ssCtr = 0, hitApp = 0, appId = "", tiffFlg = "false";
 
 	// 親JSからパラメータを取得
-	var bmBase = 'https://dl.dropboxusercontent.com/s/xvjr3je5zn7l0gd/apphtml.js';
+	var bmBase = 'https://github.com/feelingplace/iTunesStoreHtml/raw/master/apphtml.js';
 	var cnt = getJs('cnt'), knd = getJs('knd'), out = getJs('out'), aff = getJs('aff'), phg = getJs('phg');//PHGアフィリエイトIDを追加
 	var scs = getJs('scs'), ipd = getJs('ipd'), fmt = unescape(getJs('fmt'));
 	
