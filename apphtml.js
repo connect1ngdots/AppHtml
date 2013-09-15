@@ -83,7 +83,7 @@
 		*********** iTunes Search APIの戻り値（ここまで）***********/
 
         s.charset = "utf-8";
-        s.src = src + "&callback=result";alert(s.src);
+        s.src = src + "&callback=result";
         s.id = "bmlt";
         d.body.appendChild(s);
         w.result = function (data) {
@@ -104,7 +104,7 @@
                     if (eval(z.price) == 0) x.price = '無料';
                     else x.price = '￥' + fmtNumber(z.price);
                     x.appname = z.trackCensoredName;
-                    x.title = x.appname  + '（' + x.price + '）';
+                    x.title = x.appname + '（' + x.price + '）';
                 }
                 if (knd == "song") {
                     x.title = z.trackCensoredName + ' （' + z.artistName + '）';
@@ -256,10 +256,10 @@
             x.trackcnt = data.trackCount + '曲';
             x.pubdate = data.releaseDate.slice(0, 4) + '年';
             x.iconurl = data.artworkUrl100;
-//            x.icon30url = data.artworkUrl30;
-//            x.icon60url = data.artworkUrl60;
-//            x.icon100url = data.artworkUrl100;
-//            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
+            //            x.icon30url = data.artworkUrl30;
+            //            x.icon60url = data.artworkUrl60;
+            //            x.icon100url = data.artworkUrl100;
+            //            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
             x.artist = data.artistName;
         }
         if (knd == "album") {
@@ -272,9 +272,9 @@
             x.trackcnt = data.trackCount + '曲';
             x.pubdate = data.releaseDate.slice(0, 4) + '年';
             x.iconurl = data.artworkUrl100;
-//            x.icon60url = data.artworkUrl60;
-//            x.icon100url = data.artworkUrl100;
-//            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
+            //            x.icon60url = data.artworkUrl60;
+            //            x.icon100url = data.artworkUrl100;
+            //            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
             x.artist = data.artistName;
             if (!data.copyright) x.copyr = '';
             else x.copyr = data.copyright;
@@ -297,11 +297,11 @@
             x.pubdate = data.releaseDate.slice(0, 4) + '年';
             x.url = data.trackViewUrl;
             x.phgurl = PHGUrl(data.trackViewUrl, phg);
-//            x.icon227url = data.artworkUrl100.replace("100x100-75", "227x227-75");
+            //            x.icon227url = data.artworkUrl100.replace("100x100-75", "227x227-75");
             x.iconurl = data.artworkUrl100;
-//            x.icon140url = data.artworkUrl100.replace("100x100-75", "140x140-75");
-//            x.icon60url = data.artworkUrl60;
-//            x.icon30url = data.artworkUrl30;
+            //            x.icon140url = data.artworkUrl100.replace("100x100-75", "140x140-75");
+            //            x.icon60url = data.artworkUrl60;
+            //            x.icon30url = data.artworkUrl30;
             x.artist = data.artistName;
 
             if (!data.shortDescription) {
@@ -327,9 +327,9 @@
             x.url = data.trackViewUrl;
             x.phgurl = PHGUrl(data.trackViewUrl, phg);
             x.iconurl = data.artworkUrl100;
-//            x.icon225url = data.artworkUrl100.replace("100x100-75", "225x225-75");
-//            x.icon100url = data.artworkUrl100;
-//            x.icon60url = data.artworkUrl60;
+            //            x.icon225url = data.artworkUrl100.replace("100x100-75", "225x225-75");
+            //            x.icon100url = data.artworkUrl100;
+            //            x.icon60url = data.artworkUrl60;
             x.artist = data.artistName;
             x.desc = data.description;
             x.briefdesc = x.desc.substring(0, 200) + "...";
@@ -356,19 +356,19 @@
             x.url = data.trackViewUrl;
             tmp = data.artworkUrl100.split(".");
             x.iconurl = data.artworkUrl100;
-//            reg = new RegExp(tmp[tmp.length - 1] + '$');
-//            x.icon100url = data.artworkUrl100.replace(reg, "100x100-75." + tmp[tmp.length - 1]);
-//            x.icon100url = x.icon100url.replace("512x512-75.", "");
-//            x.icon100url = x.icon100url.replace(".tiff", ".png");
-//            x.icon100url = x.icon100url.replace(".tif", ".png");
-//            x.icon75url = data.artworkUrl100.replace(reg, "75x75-65." + tmp[tmp.length - 1]);
-//            x.icon75url = x.icon75url.replace("512x512-75.", "");
-//            x.icon75url = x.icon75url.replace(".tiff", ".png");
-//            x.icon75url = x.icon75url.replace(".tif", ".png");
-//            x.icon53url = data.artworkUrl100.replace(reg, "53x53-75." + tmp[tmp.length - 1]);
-//            x.icon53url = x.icon53url.replace("512x512-75.", "");
-//            x.icon53url = x.icon53url.replace(".tiff", ".png");
-//            x.icon53url = x.icon53url.replace(".tif", ".png");
+            //            reg = new RegExp(tmp[tmp.length - 1] + '$');
+            //            x.icon100url = data.artworkUrl100.replace(reg, "100x100-75." + tmp[tmp.length - 1]);
+            //            x.icon100url = x.icon100url.replace("512x512-75.", "");
+            //            x.icon100url = x.icon100url.replace(".tiff", ".png");
+            //            x.icon100url = x.icon100url.replace(".tif", ".png");
+            //            x.icon75url = data.artworkUrl100.replace(reg, "75x75-65." + tmp[tmp.length - 1]);
+            //            x.icon75url = x.icon75url.replace("512x512-75.", "");
+            //            x.icon75url = x.icon75url.replace(".tiff", ".png");
+            //            x.icon75url = x.icon75url.replace(".tif", ".png");
+            //            x.icon53url = data.artworkUrl100.replace(reg, "53x53-75." + tmp[tmp.length - 1]);
+            //            x.icon53url = x.icon53url.replace("512x512-75.", "");
+            //            x.icon53url = x.icon53url.replace(".tiff", ".png");
+            //            x.icon53url = x.icon53url.replace(".tif", ".png");
 
             // Macの場合は無い（moveos, os, gamecenter, univ）
             x.moveos = "";
