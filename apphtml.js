@@ -41,7 +41,7 @@
     }
 
     // bookmarkletの予約語（40個）
-    var bmAry = ['appname', 'version', 'price', 'title', 'category', 'appsize', 'pubdate', 'seller', 'sellersite', 'selleritunes', 'url', 'iconurl', 'moveos', 'os', 'gamecenter', 'univ', 'lang', 'rating', 'curverrating', 'curverstar', 'curreviewcnt', 'allverrating', 'allverstar', 'allreviewcnt', 'desc', 'descnew', 'image1', 'image2', 'image3', 'image4', 'image5', 'univimage1', 'univimage2', 'univimage3', 'univimage4', 'univimage5', 'phgurl', 'artist','musicname','moviename','bookname']; //予約語としてphgurlを追加
+    var bmAry = ['appname', 'version', 'price', 'title', 'category', 'appsize', 'pubdate', 'seller', 'sellersite', 'selleritunes', 'url', 'iconurl', 'moveos', 'os', 'gamecenter', 'univ', 'lang', 'rating', 'curverrating', 'curverstar', 'curreviewcnt', 'allverrating', 'allverstar', 'allreviewcnt', 'desc', 'descnew', 'image1', 'image2', 'image3', 'image4', 'image5', 'univimage1', 'univimage2', 'univimage3', 'univimage4', 'univimage5', 'phgurl', 'artist', 'musicname', 'moviename', 'bookname']; //予約語としてphgurlを追加
 
     // メイン処理（非同期実行を防ぐ為にTimerを利用）
     var timerId = setInterval(function () {
