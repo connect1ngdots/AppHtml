@@ -10,7 +10,7 @@
         tiffFlg = "false";
 
     // 親JSからパラメータを取得
-    var bmBase = 'https://dl.dropboxusercontent.com/s/xvjr3je5zn7l0gd/apphtml.js';
+    var bmBase = 'https://dl.dropboxusercontent.com/s/bv267xh585312kg/apphtml.js';
     var cnt = getJs('cnt'),
         knd = getJs('knd'),
         out = getJs('out'),
