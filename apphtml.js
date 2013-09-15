@@ -33,7 +33,7 @@
         else if (w.getSelection) kwd = w.getSelection();
         else if (d.getSelection) kwd = d.getSelection();
         else kwd = '';
-        if (kwd == "") kwd = prompt("Input App name.", "");
+        if (kwd == "") kwd = prompt("What do you want to search?", "");
         if (kwd == "" || !kwd) {
             prompt('Result', 'Not Found ...');
             return;
