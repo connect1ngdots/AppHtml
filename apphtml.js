@@ -18,7 +18,7 @@
         fmt = unescape(getJs('fmt')); //PHGアフィリエイトIDを追加
 
     // 見ているサイトがiTunesWebだった場合
-    if (location.href.indexOf("http://itunes.apple.com/") != -1) {
+    if (location.href.indexOf("https://itunes.apple.com/") != -1) {
         var urlAry = location.href.split("/id");
         appId = urlAry[1];
         urlAry = appId.split("?");
