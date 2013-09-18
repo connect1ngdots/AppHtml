@@ -28,7 +28,7 @@ textarea{width:100%;color:#3333FF}
 <ul>
 <li>iTunes Store、App Store、iBookstore、および Mac App Store 上のコンテンツへのリンク作成ツールです。</li>
 <li>iTunesアフィリエイトプログラムのPHG対応リンクを作成することが可能です。</li>
-<li>iTunesアフィリエイトプログラムへの申込は<a href="http://www.apple.com/jp/itunes/affiliates/" targer="blank">こちらから</a>。</li>
+<li>iTunesアフィリエイトプログラムへの申込は<a href="http://www.apple.com/jp/itunes/affiliates/" target="blank">こちらから</a>。</li>
 </ul>
 <form>
 <input type="button" value="設定を保存" id="buttonSave" onclick="javascript:save_config();"> 
@@ -111,7 +111,7 @@ function load_config() {
 		var config_saved = storage.get("ithtml_saved");
 		var config_bmn = storage.get("ithtml_bmn");
 		var config_phg = storage.get("ithtml_phg");
-		var config_ct = storage.get("ithtml_ct");
+		//var config_ct = storage.get("ithtml_ct");
 		var config_cnt = storage.get("ithtml_cnt");
 		var config_out = storage.get("ithtml_out");
 		var config_code = storage.get("ithtml_code");
@@ -119,7 +119,7 @@ function load_config() {
 		d.getElementById("knd").value = config_knd;
 		d.getElementById("bmn").value = config_bmn;
 		d.getElementById("phg").value = config_phg;
-		d.getElementById("ct").value = config_ct;
+		//d.getElementById("ct").value = config_ct;
 		d.getElementById("cnt").value = config_cnt;
 		d.getElementById("out").value = config_out;
 		d.getElementById("code").value = config_code;
@@ -141,7 +141,7 @@ function save_config() {
 	storage.set("ithtml_bmn", d.getElementById("bmn").value);
 	storage.set("ithtml_saved", saved_date);
 	storage.set("ithtml_phg", d.getElementById("phg").value);
-	storage.set("ithtml_ct", d.getElementById("ct").value);
+	//storage.set("ithtml_ct", d.getElementById("ct").value);
 	storage.set("ithtml_cnt", d.getElementById("cnt").value);
 	storage.set("ithtml_out", d.getElementById("out").value);
 	storage.set("ithtml_code", d.getElementById("code").value);
@@ -357,7 +357,7 @@ function SelectEntity(obj){
 	if (obj.value == 'Album') d.getElementById("knd").value = "album", d.getElementById("bmn").value = "MusicHtml(Album)";
 	if (obj.value == 'Movie') d.getElementById("knd").value = "movie", d.getElementById("bmn").value = "MovieHtml";
 	if (obj.value == 'eBook') d.getElementById("knd").value = "ebook", d.getElementById("bmn").value = "iBooksHtml";
-	//d.getElementById("knd").value = obj.value.toLowerCase();
+	d.getElementById("knd").value = obj.value;
 }
 
 //-->
