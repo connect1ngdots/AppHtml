@@ -7,7 +7,7 @@
         ssCtr = 0,
         hitApp = 0,
         appId = "",
-        tiffFlg = "false";
+//        tiffFlg = "false";
 
     // 親JSからパラメータを取得
     var bmBase = 'https://dl.dropboxusercontent.com/s/bv267xh585312kg/apphtml.js';
@@ -41,7 +41,7 @@
     }
 
     // bookmarkletの予約語（40個）
-    var bmAry = ['appname', 'version', 'price', 'title', 'category', 'appsize', 'pubdate', 'seller', 'sellersite', 'selleritunes', 'url', 'iconurl', 'moveos', 'os', 'gamecenter', 'univ', 'lang', 'rating', 'curverrating', 'curverstar', 'curreviewcnt', 'allverrating', 'allverstar', 'allreviewcnt', 'desc', 'descnew', 'image1', 'image2', 'image3', 'image4', 'image5', 'univimage1', 'univimage2', 'univimage3', 'univimage4', 'univimage5', 'phgurl', 'artist', 'musicname', 'moviename', 'bookname']; //予約語としてphgurlを追加
+    var bmAry = ['appname', 'version', 'price', 'title', 'category', 'appsize', 'pubdate', 'seller', 'sellersite', 'selleritunes', 'url', 'iconurl', 'moveos', 'os', 'gamecenter', 'univ', 'lang', 'rating', 'curverrating', 'curverstar', 'curreviewcnt', 'allverrating', 'allverstar', 'allreviewcnt', 'desc', 'descnew', 'image1', 'image2', 'image3', 'image4', 'image5', 'univimage1', 'univimage2', 'univimage3', 'univimage4', 'univimage5', 'phgurl', 'artist', 'musicname', 'moviename', 'bookname','ratingcnt']; //予約語としてphgurlを追加
 
     // メイン処理（非同期実行を防ぐ為にTimerを利用）
     var timerId = setInterval(function () {
@@ -83,7 +83,7 @@
 		*********** iTunes Search APIの戻り値（ここまで）***********/
 
         s.charset = "utf-8";
-        s.src = src + "&callback=result";
+        s.src = src + "&callback=result";//alert(s.src);
         s.id = "bmlt";
         d.body.appendChild(s);
         w.result = function (data) {
@@ -97,6 +97,11 @@
                 if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
                     json[i].description = json[i].description.replace(/\n/g, '<br>');
                     if (json[i].releaseNotes) json[i].releaseNotes = json[i].releaseNotes.replace(/\n/g, '<br>');
+                    if (!json[i].supportedDevices) json[i].supportedDevices ="",
+                }
+                if (knd == "movie") {
+	                json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
+	                json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');	                
                 }
                 var z = json[i],
                     x = new Array(bmAry);
@@ -147,7 +152,7 @@
         }
         x = pData + '\n';
         chk = pData;
-        if (tiffFlg == "true") prompt("Screenshots cannot be displayed because of TIFF files.", "Warning...");
+//        if (tiffFlg == "true") prompt("Screenshots cannot be displayed because of TIFF files.", "Warning...");
         if (chk != '') {
             // 出力方法ごとの処理（プレビュー表示）
             if (out == "preview") {
@@ -335,7 +340,7 @@
             x.briefdesc = x.desc.substring(0, 200) + "...";
             x.memo = 'Your comment here';
             x.rating = data.averageUserRating;
-            if (!data.ratingcnt) x.ratingcnt = '0';
+            if (!data.userRatingCount) x.ratingcnt = '0';
             else x.ratingcnt = fmtNumber(data.userRatingCount);
         }
 
@@ -381,12 +386,9 @@
                 x.os = x.moveos.replace(/.*all.*/g, 'iPhone');
                 if (x.os == '') x.os = x.moveos.replace(/.*iPhone.*/g, 'iPhone');
                 if (x.os == '') x.os = x.moveos.replace(/.*iPad.*/g, 'iPad');
-                if (data.isGameCenterEnabled) x.gamecenter = '<img width="100" alt="GameCenter対応" ' +
-                    'src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/gc_badge.png">';
+                if (data.isGameCenterEnabled) x.gamecenter = 'GameCenter対応';
                 if (!x.gamecenter) x.gamecenter = "";
-                if (data.ipadScreenshotUrls[0] && data.screenshotUrls[0]) x.univ =
-                    '<img alt="+ " src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/fat-binary-badge-web.png">' +
-                    ' iPhone/iPadの両方に対応';
+                if (data.ipadScreenshotUrls[0] && data.screenshotUrls[0]) x.univ = 'iPhone/iPadの両方に対応';
                 if (!x.univ) x.univ = "";
             }
 
@@ -396,7 +398,7 @@
             if ('' + data.averageUserRatingForCurrentVersion == 'null') x.curverrating = '無し';
             else x.curverrating =
                 data.averageUserRatingForCurrentVersion;
-            x.curverstar = getStar(data.averageUserRatingForCurrentVersion);
+//            x.curverstar = getStar(data.averageUserRatingForCurrentVersion);
             if (!data.userRatingCountForCurrentVersion) {
                 x.curreviewcnt = '0件の評価';
             } else {
@@ -405,7 +407,7 @@
             x.curreviewcnt = x.curreviewcnt.replace('n,ull', '0');
             if ('' + data.averageUserRating == 'null') x.allverrating = '無し';
             else x.allverrating = data.averageUserRating;
-            x.allverstar = getStar(data.averageUserRating);
+//            x.allverstar = getStar(data.averageUserRating);
             if (!data.userRatingCount) {
                 x.allreviewcnt = '0件の評価';
             } else {
@@ -426,13 +428,13 @@
                             data.screenshotUrls[i] + '" ' +
                             'width="' + data['image' + (i + 1) + 'width'] + 'px">';
                     }
-                }
-                for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
-                    if (data.ipadScreenshotUrls[i]) {
-                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
-                            data.ipadScreenshotUrls[i] + '" ' +
-                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
-                    }
+//                }
+//                for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
+//                    if (data.ipadScreenshotUrls[i]) {
+//                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
+//                            data.ipadScreenshotUrls[i] + '" ' +
+//                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
+//                    }
                 }
             }
             // iPadの場合は、UnivスクショにiPhone画像をセット（image, univimage）
@@ -443,13 +445,13 @@
                             data.ipadScreenshotUrls[i] + '" ' +
                             'width="' + data['image' + (i + 1) + 'width'] + 'px">';
                     }
-                }
-                for (i = 0; i < data.screenshotUrls.length; i++) {
-                    if (data.screenshotUrls[i]) {
-                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
-                            data.screenshotUrls[i] + '" ' +
-                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
-                    }
+//                }
+//                for (i = 0; i < data.screenshotUrls.length; i++) {
+//                    if (data.screenshotUrls[i]) {
+//                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
+//                            data.screenshotUrls[i] + '" ' +
+//                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
+//                    }
                 }
             }
             // Macの場合は、スクショのみでUnivスクショは無し（image）
@@ -540,14 +542,14 @@
 
     // スター生成
 
-    function getStar(x) {
-        var star = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star.png">';
-        var half = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star_half.png">';
-        var tmp = ('' + x).split(".", 2);
-        var ret = '';
-        for (var i = 1; i < eval(tmp[0]) + 1; i++) ret = ret + star;
-        if (tmp[1]) ret = ret + half;
-        if (ret == '') ret = '無し';
-        return ret;
-    }
+//    function getStar(x) {
+//        var star = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star.png">';
+//        var half = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star_half.png">';
+//        var tmp = ('' + x).split(".", 2);
+//        var ret = '';
+//        for (var i = 1; i < eval(tmp[0]) + 1; i++) ret = ret + star;
+//        if (tmp[1]) ret = ret + half;
+//        if (ret == '') ret = '無し';
+//        return ret;
+//    }
 })();
