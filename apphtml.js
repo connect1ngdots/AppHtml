@@ -7,10 +7,10 @@
         ssCtr = 0,
         hitApp = 0,
         appId = "",
-//        tiffFlg = "false";
+        //        tiffFlg = "false";
 
-    // 親JSからパラメータを取得
-    var bmBase = 'https://dl.dropboxusercontent.com/s/bv267xh585312kg/apphtml.js';
+        // 親JSからパラメータを取得
+        bmBase = "https://dl.dropboxusercontent.com/s/bv267xh585312kg/apphtml.js";
     var cnt = getJs('cnt'),
         knd = getJs('knd'),
         out = getJs('out'),
@@ -41,7 +41,7 @@
     }
 
     // bookmarkletの予約語（40個）
-    var bmAry = ['appname', 'version', 'price', 'title', 'category', 'appsize', 'pubdate', 'seller', 'sellersite', 'selleritunes', 'url', 'iconurl', 'moveos', 'os', 'gamecenter', 'univ', 'lang', 'rating', 'curverrating', 'curverstar', 'curreviewcnt', 'allverrating', 'allverstar', 'allreviewcnt', 'desc', 'descnew', 'image1', 'image2', 'image3', 'image4', 'image5', 'univimage1', 'univimage2', 'univimage3', 'univimage4', 'univimage5', 'phgurl', 'artist', 'musicname', 'moviename', 'bookname','ratingcnt']; //予約語としてphgurlを追加
+    var bmAry = ['appname', 'version', 'price', 'title', 'category', 'appsize', 'pubdate', "artist",'sellersite', 'url','phgurl', 'iconurl', 'moveos', 'os', 'gamecenter', 'univ', 'lang', 'rating', 'curverrating','curreviewcnt', 'allverrating','allreviewcnt', 'desc', 'descnew', 'image1', 'image2', 'image3', 'image4', 'image5','musicname', 'moviename', 'bookname', 'ratingcnt', "iconurl","trackcnt","preview","copyr","playtime","longdesc","shortdesc"];
 
     // メイン処理（非同期実行を防ぐ為にTimerを利用）
     var timerId = setInterval(function () {
@@ -83,7 +83,7 @@
 		*********** iTunes Search APIの戻り値（ここまで）***********/
 
         s.charset = "utf-8";
-        s.src = src + "&callback=result";//alert(s.src);
+        s.src = src + "&callback=result";
         s.id = "bmlt";
         d.body.appendChild(s);
         w.result = function (data) {
@@ -92,16 +92,23 @@
                 step = 3;
                 return;
             }
-            for (var i = 0; i < data.resultCount; i++) {
+            //artworkUrl100がないものをresultsから削除
+            for (var i = 0; i < data.results.length; i++) {
+                if (!data.results[i].artworkUrl100) {
+                    data.results.splice(i, 1);
+                    i = i - 1;
+                }
+            }
+            for (var i = 0; i < data.results.length; i++) {
                 json[i] = data.results[i];
                 if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
                     json[i].description = json[i].description.replace(/\n/g, '<br>');
                     if (json[i].releaseNotes) json[i].releaseNotes = json[i].releaseNotes.replace(/\n/g, '<br>');
-                    if (!json[i].supportedDevices) json[i].supportedDevices ="",
+                    if (!json[i].supportedDevices) json[i].supportedDevices = "";
                 }
                 if (knd == "movie") {
-	                json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
-	                json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');	                
+                    json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
+                    json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');
                 }
                 var z = json[i],
                     x = new Array(bmAry);
@@ -123,7 +130,7 @@
                 if (knd == "ebook") {
                     x.title = z.trackCensoredName + ' （' + z.artistName + '）';
                 }
-                var r = prompt('【' + (i + 1) + '/' + data.resultCount + '】' + x.title, 'OK→次, キャンセル→決定');
+                var r = prompt('【' + (i + 1) + '/' + data.results.length + '】' + x.title, 'OK→次, キャンセル→決定');
                 if (!r) {
                     hitApp = i;
                     step = 2;
@@ -152,7 +159,7 @@
         }
         x = pData + '\n';
         chk = pData;
-//        if (tiffFlg == "true") prompt("Screenshots cannot be displayed because of TIFF files.", "Warning...");
+        //        if (tiffFlg == "true") prompt("Screenshots cannot be displayed because of TIFF files.", "Warning...");
         if (chk != '') {
             // 出力方法ごとの処理（プレビュー表示）
             if (out == "preview") {
@@ -266,6 +273,7 @@
             //            x.icon100url = data.artworkUrl100;
             //            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
             x.artist = data.artistName;
+            x.preview = data.previewUrl;
         }
         if (knd == "album") {
             x.musicname = data.collectionCensoredName
@@ -340,8 +348,9 @@
             x.briefdesc = x.desc.substring(0, 200) + "...";
             x.memo = 'Your comment here';
             x.rating = data.averageUserRating;
-            if (!data.userRatingCount) x.ratingcnt = '0';
-            else x.ratingcnt = fmtNumber(data.userRatingCount);
+            if (!data.averageUserRating) x.rating = '無し';
+            x.ratingcnt = fmtNumber(data.userRatingCount) + '件の評価';
+            if(!data.userRatingCount) x.ratingcnt = '0件の評価';
         }
 
         if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
@@ -398,7 +407,7 @@
             if ('' + data.averageUserRatingForCurrentVersion == 'null') x.curverrating = '無し';
             else x.curverrating =
                 data.averageUserRatingForCurrentVersion;
-//            x.curverstar = getStar(data.averageUserRatingForCurrentVersion);
+            //            x.curverstar = getStar(data.averageUserRatingForCurrentVersion);
             if (!data.userRatingCountForCurrentVersion) {
                 x.curreviewcnt = '0件の評価';
             } else {
@@ -407,7 +416,7 @@
             x.curreviewcnt = x.curreviewcnt.replace('n,ull', '0');
             if ('' + data.averageUserRating == 'null') x.allverrating = '無し';
             else x.allverrating = data.averageUserRating;
-//            x.allverstar = getStar(data.averageUserRating);
+            //            x.allverstar = getStar(data.averageUserRating);
             if (!data.userRatingCount) {
                 x.allreviewcnt = '0件の評価';
             } else {
@@ -428,13 +437,13 @@
                             data.screenshotUrls[i] + '" ' +
                             'width="' + data['image' + (i + 1) + 'width'] + 'px">';
                     }
-//                }
-//                for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
-//                    if (data.ipadScreenshotUrls[i]) {
-//                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
-//                            data.ipadScreenshotUrls[i] + '" ' +
-//                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
-//                    }
+                    //                }
+                    //                for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
+                    //                    if (data.ipadScreenshotUrls[i]) {
+                    //                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
+                    //                            data.ipadScreenshotUrls[i] + '" ' +
+                    //                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
+                    //                    }
                 }
             }
             // iPadの場合は、UnivスクショにiPhone画像をセット（image, univimage）
@@ -445,13 +454,13 @@
                             data.ipadScreenshotUrls[i] + '" ' +
                             'width="' + data['image' + (i + 1) + 'width'] + 'px">';
                     }
-//                }
-//                for (i = 0; i < data.screenshotUrls.length; i++) {
-//                    if (data.screenshotUrls[i]) {
-//                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
-//                            data.screenshotUrls[i] + '" ' +
-//                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
-//                    }
+                    //                }
+                    //                for (i = 0; i < data.screenshotUrls.length; i++) {
+                    //                    if (data.screenshotUrls[i]) {
+                    //                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
+                    //                            data.screenshotUrls[i] + '" ' +
+                    //                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
+                    //                    }
                 }
             }
             // Macの場合は、スクショのみでUnivスクショは無し（image）
@@ -469,7 +478,6 @@
     }
 
     // 親JSからGET形式でパラメータを引継ぐ為の関数
-
     function getJs(searchKey) {
         var scripts = document.getElementsByTagName("script"),
             urlArg, params = {};
@@ -496,7 +504,6 @@
     }
 
     // 数字のカンマ編集
-
     function fmtNumber(x) {
         var s = '' + x,
             p = s.indexOf('.');
@@ -511,7 +518,6 @@
     }
 
     // サイズ換算
-
     function sizeNumber(x) {
         var r = Math.round((eval(x) / 1000000) * 10) / 10;
         r = fmtNumber(r);
@@ -520,7 +526,6 @@
     }
 
     // 再生時間を変換
-
     function sizeTime(x) {
         var r = Math.round((eval(x) / 60000));
         r = fmtNumber(r);
@@ -529,7 +534,6 @@
     }
 
     // PHGアフィリエイトリンクまたはLinkShareリンク生成
-
     function PHGUrl(url, id) {
         if (phg != "") {
             var affId = '&at=' + id;
@@ -541,15 +545,14 @@
     }
 
     // スター生成
-
-//    function getStar(x) {
-//        var star = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star.png">';
-//        var half = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star_half.png">';
-//        var tmp = ('' + x).split(".", 2);
-//        var ret = '';
-//        for (var i = 1; i < eval(tmp[0]) + 1; i++) ret = ret + star;
-//        if (tmp[1]) ret = ret + half;
-//        if (ret == '') ret = '無し';
-//        return ret;
-//    }
+    //    function getStar(x) {
+    //        var star = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star.png">';
+    //        var half = '<img alt="" src="http://r.mzstatic.com/htmlResources/1043/web-storefront/images/rating_star_half.png">';
+    //        var tmp = ('' + x).split(".", 2);
+    //        var ret = '';
+    //        for (var i = 1; i < eval(tmp[0]) + 1; i++) ret = ret + star;
+    //        if (tmp[1]) ret = ret + half;
+    //        if (ret == '') ret = '無し';
+    //        return ret;
+    //    }
 })();
