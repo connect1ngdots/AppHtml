@@ -85,7 +85,7 @@
         s.charset = "utf-8";
         s.src = src + "&callback=result";
         s.id = "bmlt";
-        d.body.appendChild(s);
+        d.body.appendChild(s);//alert(s.src);
         w.result = function (data) {
             if (data.resultCount == 0) {
                 prompt('Result', 'Not Found ...');
