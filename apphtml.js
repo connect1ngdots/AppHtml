@@ -10,7 +10,7 @@
         //        tiffFlg = "false";
 
         // 親JSからパラメータを取得
-        bmBase = "https://dl.dropboxusercontent.com/s/bv267xh585312kg/apphtml.js";
+        bmBase = "https://dl.dropboxusercontent.com/s/9vnlvarh4zid9o2/apphtml.js";
     var cnt = getJs('cnt'),
         knd = getJs('knd'),
         out = getJs('out'),
@@ -40,8 +40,8 @@
         }
     }
 
-    // bookmarkletの予約語（40個）
-    var bmAry = ['appname', 'version', 'price', 'title', 'category', 'appsize', 'pubdate', "artist",'sellersite', 'url','phgurl', 'iconurl', 'moveos', 'os', 'gamecenter', 'univ', 'lang', 'rating', 'curverrating','curreviewcnt', 'allverrating','allreviewcnt', 'desc', 'descnew', 'image1', 'image2', 'image3', 'image4', 'image5','musicname', 'moviename', 'bookname', 'ratingcnt', "iconurl","trackcnt","preview","copyr","playtime","longdesc","shortdesc"];
+    // bookmarkletの予約語（43個）
+    var bmAry = ['name', 'url','preview','price',  'category','playtime','trackcnt','pubdate','icon60url', 'icon100url','artist','artisturl','seller','sellerurl','copyr','desc','shortdesc','descnew','version','rating','userrating','userratingcnt','curuserrating','curuserratingcnt','appsize','moveos','os','gamecenter','univ','lang','image1','image2','image3','image4','image5','univimage1','univimage2','univimage3','univimage4','univimage5','badgeL','badgeS','textonly'];
 
     // メイン処理（非同期実行を防ぐ為にTimerを利用）
     var timerId = setInterval(function () {
