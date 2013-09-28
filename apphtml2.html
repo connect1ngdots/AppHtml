@@ -163,7 +163,7 @@ function bmCreate() {
 	}
 
 	// Bookmarklet（本体と引数定義）
-	var bmBase = 'https://dl.dropboxusercontent.com/s/bv267xh585312kg/apphtml.js',
+	var bmBase = 'https://dl.dropboxusercontent.com/s/9vnlvarh4zid9o2/apphtml.js',
 	bmArg = "url+='&out='+'%out%'+'&cnt='+'%cnt%'+'&knd='+'%knd%'+'&phg='+'%phg%'+'&fmt='+'%fmt%';";
 
 	// Bookmarklet呼出（雛形）
@@ -219,19 +219,13 @@ function loadFmt() {
 //iPhone and iPad Template
 	if(ent == "iPhone" || ent == "iPad"){
 		if(temp == "小さいボタン")
-			def_temp = '<a href="${url}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_appstore-sm.png) no-repeat;width:61px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_appstore-sm.svg);}"></a>';
+			def_temp = '${badgeS}';
 		if(temp == "大きいボタン")
-			def_temp = '<a href="${url}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>';
+			def_temp = '${badgeL}';
 		if(temp == "テキストのみ")
-			def_temp = '<a href="${url}" target="itunes_store">${appname} - ${artist}</a>';
-		if(temp == "小さいボタン(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_appstore-sm.png) no-repeat;width:61px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_appstore-sm.svg);}"></a>';
-		if(temp == "大きいボタン(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>';
-		if(temp == "テキストのみ(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store">${appname} - ${artist}</a>';
+			def_temp = '${textonly}';
 		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${iconurl}"><br><span class="apphtml_name">${appname}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg"></div>';
+			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg"></div>';
 		if(temp == "予約語一覧")
 			def_temp = '<strong style="color:blue;">アプリ名 ＄{appname}</strong><br>${appname}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">販売元 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">販売元サイト ＄{sellersite}</strong><br>${sellersite}<br><br><strong style="color:blue;">アイコンURL ＄{iconurl}</strong><br>${iconurl}<br><br><strong style="color:blue;">PHGURL ＄{phgurl}</strong><br>${phgurl}<br><br><strong style="color:blue;">アプリURL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">稼働条件 ＄{moveos}</strong><br>${moveos}<br><br><strong style="color:blue;">メインOS ＄{os}</strong><br>${os}<br><br><strong style="color:blue;">ゲームセンター対応 ＄{gamecenter}</strong><br>${gamecenter}<br><br><strong style="color:blue;">ユニバーサル対応 ＄{univ}</strong><br>${univ}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">現バージョン評価 ＄{curverrating}</strong><br>${curverrating}<br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curreviewcnt}</strong><br>${curreviewcnt}<br><br><strong style="color:blue;">全バージョン評価 ＄{allverrating}</strong><br>${allverrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{allreviewcnt}</strong><br>${allreviewcnt}<br><br><strong style="color:blue;">アプリ説明 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}';
 	}
@@ -239,19 +233,13 @@ function loadFmt() {
 //Mac Template
 	if(ent == "Mac"){
 		if(temp == "小さいボタン")
-			def_temp = '<a href="{url}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_macappstore-sm.png) no-repeat;width:81px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_macappstore-sm.svg);}"></a>';
+			def_temp = '${badgeS}';
 		if(temp == "大きいボタン")
-			def_temp = '<a href="${url}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.png) no-repeat;width:165px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg);}"></a>';
+			def_temp = '${badgeL}';
 		if(temp == "テキストのみ")
-			def_temp = '<a href="${url}" target="itunes_store">${appname} - ${artist}</a>';
-		if(temp == "小さいボタン(PHG対応リンク)")
-			def_temp = '<a href="{phgurl}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_macappstore-sm.png) no-repeat;width:81px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_macappstore-sm.svg);}"></a>';
-		if(temp == "大きいボタン(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.png) no-repeat;width:165px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg);}"></a>';
-		if(temp == "テキストのみ(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store">${appname} - ${artist}</a>';
+			def_temp = '${textonly}';
 		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${iconurl}"><br><span class="apphtml_name">${appname}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg"></div>';
+			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg"></div>';
 		if(temp == "予約語一覧")
 			def_temp = '<strong style="color:blue;">アプリ名 ＄{appname}</strong><br>${appname}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">販売元 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">販売元サイト ＄{sellersite}</strong><br>${sellersite}<br><br><strong style="color:blue;">PHGURL ＄{phgurl}</strong><br>${phgurl}<br><br><strong style="color:blue;">アプリURL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">稼働条件 ＄{moveos}</strong><br>${moveos}<br><br><strong style="color:blue;">メインOS ＄{os}</strong><br>${os}<br><br><strong style="color:blue;">ゲームセンター対応 ＄{gamecenter}</strong><br>${gamecenter}<br><br><strong style="color:blue;">ユニバーサル対応 ＄{univ}</strong><br>${univ}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">現バージョン評価 ＄{curverrating}</strong><br>${curverrating}<br><br><br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curreviewcnt}</strong><br>${curreviewcnt}<br><br><strong style="color:blue;">全バージョン評価 ＄{allverrating}</strong><br>${allverrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{allreviewcnt}</strong><br>${allreviewcnt}<br><br><strong style="color:blue;">アプリ説明 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}';
 	}
@@ -259,19 +247,13 @@ function loadFmt() {
 //Song and Album Template
 	if(ent == "Song" || ent =="Album"){
 		if(temp == "小さいボタン")
-			def_temp = '<a href="{url}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
+			def_temp = '${badgeS}';
 		if(temp == "大きいボタン")
-			def_temp = '<a href="${url}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
+			def_temp = '${badgeL}';
 		if(temp == "テキストのみ")
-			def_temp = '<a href="${url}" target="itunes_store">${musicname} - ${artist}</a>';
-		if(temp == "小さいボタン(PHG対応リンク)")
-			def_temp = '<a href="{phgurl}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
-		if(temp == "大きいボタン(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
-		if(temp == "テキストのみ(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store">${musicname} - ${artist}</a>';
+			def_temp = '${textonly}';
 		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${iconurl}"><br><span class="apphtml_name">${musicname} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
+			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
 	}
 	if(ent == "Song" && temp =="予約語一覧")
 			def_temp = '<strong style="color:blue;">曲名 ＄{musicname}</strong>: ${musicname}<br><strong style="color:blue;">PHG URL ＄{phgurl}</strong>: ${phgurl}<br><strong style="color:blue;">曲 URL ＄{url}</strong>: ${url}<br><strong style="color:blue;">価格 ＄{price}</strong>: ${price}<br><strong style="color:blue;">カテゴリー ＄{category}</strong>: ${category}<br><strong style="color:blue;">曲数 ＄{trackcnt}</strong>: ${trackcnt}<br><strong style="color:blue;">リリース（年） ＄{pubdate}</strong>: ${pubdate}<br><strong style="color:blue;">アイコン画像 ＄{iconurl}</strong>: <img style="margin:0px;padding:0px;vertical-align:top;" src="${iconurl}"><br><strong style="color:blue;">アーティスト ＄{artist}</strong>: ${artist}<br><strong style="color:blue;">試聴URL ＄{preview}</strong>: ${preview}<br>';
@@ -281,38 +263,26 @@ function loadFmt() {
 //Movie Template
 	if(ent == "Movie"){
 		if(temp == "小さいボタン")
-			def_temp = '<a href="{url}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
+			def_temp = '${badgeS}';
 		if(temp == "大きいボタン")
-			def_temp = '<a href="${url}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
+			def_temp = '${badgeL}';
 		if(temp == "テキストのみ")
-			def_temp = '<a href="${url}" target="itunes_store">${moviename} - ${artist}</a>';
-		if(temp == "小さいボタン(PHG対応リンク)")
-			def_temp = '<a href="{phgurl}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
-		if(temp == "大きいボタン(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
-		if(temp == "テキストのみ(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store">${moviename} - ${artist}</a>';
+			def_temp = '${textonly}';
 		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${iconurl}"><br><span class="apphtml_name">${moviename} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
+			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
 		if(temp == "予約語一覧") 
 			def_temp = '<strong style="color:blue;">タイトル名 ＄{moviename}</strong>: ${moviename}<br><strong style="color:blue;">PHG URL ＄{phgurl}</strong>: ${phgurl}<br><strong style="color:blue;">映画 URL ＄{url}</strong>: ${url}<br><strong style="color:blue;">価格 ＄{price}</strong>: ${price}<br><strong style="color:blue;">カテゴリー ＄{category}</strong>: ${category}<br><strong style="color:blue;">再生時間（分） ＄{playtime}</strong>: ${playtime}<br><strong style="color:blue;">公開年 ＄{pubdate}</strong>: ${pubdate}<br><strong style="color:blue;">アイコン画像 ＄{iconurl}</strong>: <img style="margin:0px;padding:0px;vertical-align:top;" src="${iconurl}"><br><strong style="color:blue;">監督 ＄{artist}</strong>: ${artist}<br><strong style="color:blue;">概要紹介（通常版） ＄{longdesc}</strong>: ${longdesc}<br><strong style="color:blue;">概要紹介（簡略版） ＄{shortdesc}</strong>: ${shortdesc}<br>';
 	}
 //eBook
 	if(ent == "eBook"){
 		if(temp == "小さいボタン")
-			def_temp = '<a href="{url}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_bookstore-sm.png) no-repeat;width:65px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_bookstore-sm.svg);}"></a>';
+			def_temp = '${badgeS}';
 		if(temp == "大きいボタン")
-			def_temp = '<a href="${url}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.png) no-repeat;width:146px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg);}"></a>';
+			def_temp = '${badgeL}';
 		if(temp == "テキストのみ")
-			def_temp = '<a href="${url}" target="itunes_store">${bookname} - ${artist}</a>';
-		if(temp == "小さいボタン(PHG対応リンク)")
-			def_temp = '<a href="{phgurl}" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_bookstore-sm.png) no-repeat;width:65px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_bookstore-sm.svg);}"></a>';
-		if(temp == "大きいボタン(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.png) no-repeat;width:146px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg);}"></a>';
-		if(temp == "テキストのみ(PHG対応リンク)")
-			def_temp = '<a href="${phgurl}" target="itunes_store">${bookname} - ${artist}</a>';
+			def_temp = '${textonly}';
 		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${iconurl}"><br><span class="apphtml_name">${bookname} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg"></div>';
+			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg"></div>';
 		if(temp == "予約語一覧") 
 			def_temp = '<strong style="color:blue;">書籍名 ＄{bookname}</strong>: ${bookname}<br><strong style="color:blue;">PHG URL ＄{phgurl}</strong>: ${phgurl}<br><strong style="color:blue;">書籍 URL ＄{url}</strong>: ${url}<br><strong style="color:blue;">価格 ＄{price}</strong>: ${price}<br><strong style="color:blue;">カテゴリー ＄{category}</strong>: ${category}<br><strong style="color:blue;">公開日 ＄{pubdate}</strong>: ${pubdate}<br><strong style="color:blue;">アイコン画像 ＄{iconurl}</strong>: <img style="margin:0px;padding:0px;vertical-align:top;" src="${iconurl}"><br><strong style="color:blue;">著者 ＄{artist}</strong>: ${artist}<br><strong style="color:blue;">平均評価 ＄{rating}</strong>: ${rating}<br><strong style="color:blue;">評価件数 ＄{ratingcnt}</strong>: ${ratingcnt}<br><strong style="color:blue;">概要 ＄{desc}</strong>: ${desc}<br>';
 			}
@@ -323,13 +293,13 @@ function loadFmt() {
 var entity = new Array("iPhone","iPad","Mac","Song","Album","Movie","eBook");
 
 var template = new Array();
-template["iPhone"] = new Array("小さいボタン","大きいボタン","テキストのみ","小さいボタン(PHG対応リンク)","大きいボタン(PHG対応リンク)","テキストのみ(PHG対応リンク)","アイコン付き","予約語一覧");
-template["iPad"] = new Array("小さいボタン","大きいボタン","テキストのみ","小さいボタン(PHG対応リンク)","大きいボタン(PHG対応リンク)","テキストのみ(PHG対応リンク)","アイコン付き","予約語一覧");
-template["Mac"] = new Array("小さいボタン","大きいボタン","テキストのみ","小さいボタン(PHG対応リンク)","大きいボタン(PHG対応リンク)","テキストのみ(PHG対応リンク)","アイコン付き","予約語一覧");
-template["Song"] = new Array("小さいボタン","大きいボタン","テキストのみ","小さいボタン(PHG対応リンク)","大きいボタン(PHG対応リンク)","テキストのみ(PHG対応リンク)","アイコン付き","予約語一覧");
-template["Album"] = new Array("小さいボタン","大きいボタン","テキストのみ","小さいボタン(PHG対応リンク)","大きいボタン(PHG対応リンク)","テキストのみ(PHG対応リンク)","アイコン付き","予約語一覧");
-template["Movie"] = new Array("小さいボタン","大きいボタン","テキストのみ","小さいボタン(PHG対応リンク)","大きいボタン(PHG対応リンク)","テキストのみ(PHG対応リンク)","アイコン付き","予約語一覧");
-template["eBook"] = new Array("小さいボタン","大きいボタン","テキストのみ","小さいボタン(PHG対応リンク)","大きいボタン(PHG対応リンク)","テキストのみ(PHG対応リンク)","アイコン付き","予約語一覧");
+template["iPhone"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
+template["iPad"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
+template["Mac"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
+template["Song"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
+template["Album"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
+template["Movie"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
+template["eBook"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
 
 createSelection(form1.elements['sel_entity'], "（検索対象）", entity, entity);
 
