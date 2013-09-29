@@ -259,41 +259,52 @@
 
         //Entity毎にセット
         if (knd == "song") {
-            x.musicname = data.trackCensoredName;
-            x.url = data.collectionViewUrl;
-            x.phgurl = PHGUrl(data.collectionViewUrl, phg);
-            if (eval(data.collectionPrice) == 0) x.price = '無料';
-            else x.price = '￥' + fmtNumber(data.collectionPrice);
+            x.name = data.trackCensoredName;
+            if (phg != "") x.url = PHGUrl(data.collectionViewUrl, phg);
+            else x.url = data.collectionViewUrl;
+            x.preview = data.previewUrl;
+            if (eval(data.trackPrice) == 0) x.price = '無料';
+            else x.price = '￥' + fmtNumber(data.trackPrice);
             x.category = data.primaryGenreName;
             x.trackcnt = data.trackCount + '曲';
             x.pubdate = data.releaseDate.slice(0, 4) + '年';
-            x.iconurl = data.artworkUrl100;
+            x.icon60url = data.artworkUrl60;
+            x.icon100url = data.artworkUrl100;
             //            x.icon30url = data.artworkUrl30;
-            //            x.icon60url = data.artworkUrl60;
-            //            x.icon100url = data.artworkUrl100;
             //            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
             x.artist = data.artistName;
-            x.preview = data.previewUrl;
+            if (phg != "") x.artisturl = PHGUrl(data.artistViewUrl, phg);
+            else x.artisturl = data.artistViewUrl;
+            x.badgeL = '<a href="' + x.url + '" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
+            x.badgeS = '<a href="' + x.url + '" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
+            x.textonly = '<a href="' + x.url + '" target="itunes_store">' + x.name + ' - ' + x.artist + '</a>';
         }
         if (knd == "album") {
-            x.musicname = data.collectionCensoredName
-            x.url = data.collectionViewUrl;
-            x.phgurl = PHGUrl(data.collectionViewUrl, phg);
+            x.name = data.collectionCensoredName;
+            if(phg != "") x.url = PHGUrl(data.collectionViewUrl, phg);
+            else x.url = data.collectionViewUrl;
             if (eval(data.collectionPrice) == 0) x.price = '無料';
             else x.price = '￥' + fmtNumber(data.collectionPrice);
             x.category = data.primaryGenreName;
             x.trackcnt = data.trackCount + '曲';
             x.pubdate = data.releaseDate.slice(0, 4) + '年';
-            x.iconurl = data.artworkUrl100;
-            //            x.icon60url = data.artworkUrl60;
-            //            x.icon100url = data.artworkUrl100;
-            //            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
+            x.icon60url = data.artworkUrl60;
+            x.icon100url = data.artworkUrl100;
+//            x.icon170url = data.artworkUrl100.replace("100x100-75", "170x170-75");
             x.artist = data.artistName;
+            if (phg != "") x.artisturl = PHGUrl(data.artistViewUrl, phg);
+            else x.artisturl = data.artistViewUrl;
             if (!data.copyright) x.copyr = '';
             else x.copyr = data.copyright;
+            x.badgeL = '<a href="' + x.url + '" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
+            x.badgeS = '<a href="' + x.url + '" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
+            x.textonly = '<a href="' + x.url + '" target="itunes_store">' + x.name + ' - ' + x.artist + '</a>';
         }
         if (knd == "movie") {
-            x.moviename = data.trackCensoredName;
+            x.name = data.trackCensoredName;
+            if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
+            else x.url = data.trackViewUrl;
+            x.preview = data.previewUrl;
             if (!data.trackPrice) {
                 x.price = '';
             } else if (eval(data.trackPrice) == 0) {
@@ -301,22 +312,18 @@
             } else {
                 x.price = '￥' + fmtNumber(data.trackPrice);
             }
-            if (!data.trackPrice) x.title = x.moviename;
-            else x.title = x.moviename + '（' + x.price + '）';
+//            if (!data.trackPrice) x.title = x.moviename;
+//            else x.title = x.moviename + '（' + x.price + '）';
             x.category = data.primaryGenreName;
-
             if (!data.trackTimeMillis) x.playtime = 'データなし';
             else x.playtime = sizeTime(data.trackTimeMillis);
             x.pubdate = data.releaseDate.slice(0, 4) + '年';
-            x.url = data.trackViewUrl;
-            x.phgurl = PHGUrl(data.trackViewUrl, phg);
             //            x.icon227url = data.artworkUrl100.replace("100x100-75", "227x227-75");
-            x.iconurl = data.artworkUrl100;
+            x.icon60url = data.artworkUrl60;
+            x.icon100url = data.artworkUrl100;
             //            x.icon140url = data.artworkUrl100.replace("100x100-75", "140x140-75");
-            //            x.icon60url = data.artworkUrl60;
             //            x.icon30url = data.artworkUrl30;
             x.artist = data.artistName;
-
             if (!data.shortDescription) {
                 if (!data.longDescription) {
                     x.shortdesc = '';
@@ -326,65 +333,84 @@
             } else {
                 x.shortdesc = data.shortDescription;
             } if (!data.longDescription) x.longdesc = '';
-            else x.longdesc = data.longDescription;
-            x.memo = 'Your comment here';
+            else x.desc = data.longDescription;
+//            x.memo = 'Your comment here';
+			x.badgeL = '<a href="' + x.url + '" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
+			x.badgeS = '<a href="' + x.url + '" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
+			x.textonly = '<a href="' + x.url + '" target="itunes_store">' + x.name + ' - ' + x.artist + '</a>';
         }
 
         if (knd == "ebook") {
-            x.bookname = data.trackCensoredName;
-            x.price = data.formattedPrice;
-            x.title = x.bookname + ' （' + x.price + '）';
+            x.name = data.trackCensoredName;
+            if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
+            else x.url = data.trackViewUrl;
+            x.price = data.price;
+//            x.title = x.bookname + ' （' + x.price + '）';
             x.category = data.genres[0];
             for (i = 1; i < data.genres.length; i++) x.category = x.category + '、 ' + data.genres[i];
             x.pubdate = data.releaseDate.slice(0, 4) + '年' + Number(data.releaseDate.slice(5, 7)) + '月' + Number(data.releaseDate.slice(8, 10)) + '日';
-            x.url = data.trackViewUrl;
-            x.phgurl = PHGUrl(data.trackViewUrl, phg);
-            x.iconurl = data.artworkUrl100;
+			x.icon60url = data.artworkUrl60;
+            x.icon100url = data.artworkUrl100;
             //            x.icon225url = data.artworkUrl100.replace("100x100-75", "225x225-75");
-            //            x.icon100url = data.artworkUrl100;
-            //            x.icon60url = data.artworkUrl60;
             x.artist = data.artistName;
+            if (phg != "") x.artisturl = PHGUrl(data.artistViewUrl, phg);
+            else x.artisturl = data.artistViewUrl;
             x.desc = data.description;
-            x.briefdesc = x.desc.substring(0, 200) + "...";
-            x.memo = 'Your comment here';
-            x.rating = data.averageUserRating;
-            if (!data.averageUserRating) x.rating = '無し';
-            x.ratingcnt = fmtNumber(data.userRatingCount) + '件の評価';
-            if(!data.userRatingCount) x.ratingcnt = '0件の評価';
+//            x.briefdesc = x.desc.substring(0, 200) + "...";
+//            x.memo = 'Your comment here';
+//            x.rating = data.averageUserRating;
+            if (!data.averageUserRating) x.userrating = '無し';
+            else x.userrating = data.averageUserRating;
+            if (!data.userRatingCount) x.userratingcnt = '0件の評価';
+            else x.userratingcnt = fmtNumber(data.userRatingCount) + '件の評価';
+            x.badgeL = '<a href="' + x.url + '" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.png) no-repeat;width:146px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg);}"></a>';
+			x.badgeS = '<a href="' + x.url + '" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_bookstore-sm.png) no-repeat;width:65px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_bookstore-sm.svg);}"></a>';
+			x.textonly = '<a href="' + x.url + '" target="itunes_store">' + x.name + ' - ' + x.artist + '</a>';
         }
 
         if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
-            x.appname = data.trackCensoredName;
-            x.version = data.version;
+            x.name = data.trackCensoredName;
+            if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
+            else x.url = data.trackViewUrl;
             if (eval(data.price) == 0) x.price = '無料';
             else x.price = '￥' + fmtNumber(data.price);
-            x.title = x.appname + ' ' + x.version + '（' + x.price + '）';
             x.category = data.genres[0];
             for (i = 1; i < data.genres.length; i++) x.category = x.category + ', ' + data.genres[i];
-            x.appsize = sizeNumber(data.fileSizeBytes);
             x.pubdate = data.releaseDate.replace(/-/g, '/');
             x.pubdate = x.pubdate.replace(/T.*/g, '');
+            x.icon60url = data.artworkUrl60;
+            x.icon100url = data.artworkUrl100;
             x.artist = data.artistName;
-            x.sellersite = data.sellerUrl;
-            x.phgurl = PHGUrl(data.trackViewUrl, phg);
-            x.url = data.trackViewUrl;
-            tmp = data.artworkUrl100.split(".");
-            x.iconurl = data.artworkUrl100;
-            //            reg = new RegExp(tmp[tmp.length - 1] + '$');
-            //            x.icon100url = data.artworkUrl100.replace(reg, "100x100-75." + tmp[tmp.length - 1]);
-            //            x.icon100url = x.icon100url.replace("512x512-75.", "");
-            //            x.icon100url = x.icon100url.replace(".tiff", ".png");
-            //            x.icon100url = x.icon100url.replace(".tif", ".png");
-            //            x.icon75url = data.artworkUrl100.replace(reg, "75x75-65." + tmp[tmp.length - 1]);
-            //            x.icon75url = x.icon75url.replace("512x512-75.", "");
-            //            x.icon75url = x.icon75url.replace(".tiff", ".png");
-            //            x.icon75url = x.icon75url.replace(".tif", ".png");
-            //            x.icon53url = data.artworkUrl100.replace(reg, "53x53-75." + tmp[tmp.length - 1]);
-            //            x.icon53url = x.icon53url.replace("512x512-75.", "");
-            //            x.icon53url = x.icon53url.replace(".tiff", ".png");
-            //            x.icon53url = x.icon53url.replace(".tif", ".png");
-
-            // Macの場合は無い（moveos, os, gamecenter, univ）
+            if (phg != "") x.artisturl = PHGUrl(data.artistViewUrl, phg);
+            else x.artisturl = data.artistViewUrl;
+			x.seller = data.sellerName;
+            if (phg != "") x.sellerurl = PHGUrl(data.sellerUrl, phg);
+            else x.sellerurl = data.sellerUrl;
+            x.desc = data.description;
+            x.descnew = data.releaseNotes;
+            x.version = data.version;
+            x.rating = data.trackContentRating;
+            if ('' + data.averageUserRatingForCurrentVersion == 'null') x.curverrating = '無し';
+            else x.curverrating =
+                data.averageUserRatingForCurrentVersion;
+            //            x.curverstar = getStar(data.averageUserRatingForCurrentVersion);
+            if (!data.userRatingCountForCurrentVersion) {
+                x.curuserratingcnt = '0件の評価';
+            } else {
+                x.curuserratingcnt = fmtNumber(data.userRatingCountForCurrentVersion) + '件の評価';
+            }
+            x.curuserratingcnt = x.curuserratingcnt.replace('n,ull', '0');
+            if ('' + data.averageUserRating == 'null') x.userrating = '無し';
+            else x.userrating = data.averageUserRating;
+            //            x.allverstar = getStar(data.averageUserRating);
+            if (!data.userRatingCount) {
+                x.userratingcnt = '0件の評価';
+            } else {
+                x.userratingcnt = fmtNumber(data.userRatingCount) + '件の評価';
+            }
+            x.userratingcnt = x.userratingcnt.replace('n,ull', '0');
+//            x.title = x.appname + ' ' + x.version + '（' + x.price + '）';
+            x.appsize = sizeNumber(data.fileSizeBytes);
             x.moveos = "";
             x.os = "";
             x.gamecenter = "";
@@ -400,31 +426,8 @@
                 if (data.ipadScreenshotUrls[0] && data.screenshotUrls[0]) x.univ = 'iPhone/iPadの両方に対応';
                 if (!x.univ) x.univ = "";
             }
-
             x.lang = data.languageCodesISO2A[0];
             for (i = 1; i < data.languageCodesISO2A.length; i++) x.lang = x.lang + ', ' + data.languageCodesISO2A[i];
-            x.rating = data.trackContentRating;
-            if ('' + data.averageUserRatingForCurrentVersion == 'null') x.curverrating = '無し';
-            else x.curverrating =
-                data.averageUserRatingForCurrentVersion;
-            //            x.curverstar = getStar(data.averageUserRatingForCurrentVersion);
-            if (!data.userRatingCountForCurrentVersion) {
-                x.curreviewcnt = '0件の評価';
-            } else {
-                x.curreviewcnt = fmtNumber(data.userRatingCountForCurrentVersion) + '件の評価';
-            }
-            x.curreviewcnt = x.curreviewcnt.replace('n,ull', '0');
-            if ('' + data.averageUserRating == 'null') x.allverrating = '無し';
-            else x.allverrating = data.averageUserRating;
-            //            x.allverstar = getStar(data.averageUserRating);
-            if (!data.userRatingCount) {
-                x.allreviewcnt = '0件の評価';
-            } else {
-                x.allreviewcnt = fmtNumber(data.userRatingCount) + '件の評価';
-            }
-            x.allreviewcnt = x.allreviewcnt.replace('n,ull', '0');
-            x.desc = data.description;
-            x.descnew = data.releaseNotes;
             for (i = 1; i <= 5; i++) {
                 x['image' + i] = "";
                 x['univimage' + i] = "";
@@ -446,7 +449,7 @@
                     //                    }
                 }
             }
-            // iPadの場合は、UnivスクショにiPhone画像をセット（image, univimage）
+            // iPadの場合
             if (knd == 'iPadSoftware') {
                 for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
                     if (data.ipadScreenshotUrls[i]) {
@@ -472,6 +475,16 @@
                             'width="' + data['image' + (i + 1) + 'width'] + 'px">';
                     }
                 }
+            }
+            if (knd == 'software' || knd == 'iPadSoftware'){
+	            x.badgeL = '<a href="' + x.url + '" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>';
+	            x.badgeS = '<a href="' + x.url + '" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_appstore-sm.png) no-repeat;width:61px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_appstore-sm.svg);}"></a>';
+	            x.textonly = '<a href="' + x.url + '" target="itunes_store">' + x.name + ' - ' + x.artist + '</a>';
+            }
+            if (knd == 'macSoftware'){
+	            x.badgeL = '<a href="' + x.url + '" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.png) no-repeat;width:165px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg);}"></a>';
+	            x.badgeS = '<a href="' + x.url + '" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_macappstore-sm.png) no-repeat;width:81px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_macappstore-sm.svg);}"></a>';
+	            x.textonly = '<a href="' + x.url + '" target="itunes_store">' + x.name + ' - ' + x.artist + '</a>';
             }
         }
         return x;
