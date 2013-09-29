@@ -163,12 +163,17 @@ function bmCreate() {
 	}
 
 	// Bookmarklet（本体と引数定義）
-	var bmBase = 'https://dl.dropboxusercontent.com/s/9vnlvarh4zid9o2/apphtml.js',
-	bmArg = "url+='&out='+'%out%'+'&cnt='+'%cnt%'+'&knd='+'%knd%'+'&phg='+'%phg%'+'&fmt='+'%fmt%';";
-
-	// Bookmarklet呼出（雛形）
+    var bmBase = "" + document.location;
+    {
+        var pos = bmBase.lastIndexOf('/');
+        if (pos > 0) {
+            bmBase = bmBase.slice(0, pos + 1);
+        }
+        bmBase = bmBase + 'apphtml.js';
+    }
 	var bmlt = "javascript:(function(){var d=document,e=d.createElement('script'),url='" + 
-	bmBase + "';if(!url.match(/\\?/))url+='?t='+(new%20Date()).getTime();" + bmArg + 
+	bmBase + "';if(!url.match(/\\?/))url+='?t='+(new%20Date()).getTime();" +
+    "e.out='%out%';e.cnt='%cnt%';e.knd='%knd%';e.phg='%phg%';e.fmt='%fmt%';" +
 	"e.charset='utf-8';e.src=url;e.id='bmlt';d.body.appendChild(e);})();";
 
 	// フォームの値をセット
