@@ -15,13 +15,6 @@
         out = script.out,
         phg = script.phg,
         fmt = unescape(script.fmt);
-/*
-    var cnt = getJs('cnt'),
-        knd = getJs('knd'),
-        out = getJs('out'),
-        phg = getJs('phg'),
-        fmt = unescape(getJs('fmt')); //PHGアフィリエイトIDを追加
-*/
 
     // 見ているサイトがiTunesWebだった場合
     if (location.href.indexOf("https://itunes.apple.com/") != -1) {
