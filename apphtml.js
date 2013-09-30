@@ -478,28 +478,6 @@
         return x;
     }
 
-    // 親JSからGET形式でパラメータを引継ぐ為の関数
-    function getJs(searchKey) {
-        var script = document.getElementById("bmlt");
-        var delim = script.src.indexOf("?");
-        if (delim > 0) {
-            urlArg = script.src.slice(delim + 1);
-        }
-        var paramAry, dataKey, dataVal;
-        if (urlArg) paramAry = urlArg.split("&");
-        if (paramAry) {
-            for (var i = 0; i < paramAry.length; i++) {
-                var pos = paramAry[i].indexOf('=');
-                if (pos > 0) {
-                    dataKey = paramAry[i].substring(0, pos);
-                    dataVal = paramAry[i].substring(pos + 1);
-                }
-                if (dataKey == searchKey) return dataVal;
-            }
-        }
-        return null;
-    }
-
     // 数字のカンマ編集
     function fmtNumber(x) {
         var s = '' + x,
