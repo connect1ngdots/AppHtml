@@ -200,14 +200,7 @@ function search() {
 
   var d = document,
       e = d.createElement('script');
-  var url = "" + document.location;
-  {
-      var pos = url.lastIndexOf('/');
-      if (pos > 0) {
-          url = url.slice(0, pos + 1);
-      }
-      url = url + 'apphtml.js';
-  }
+  var url = "apphtml.js";
   if (!url.match(/\?/)) url += '?t=' + (new Date()).getTime();
   e.out = $("#conf_out").val();
   e.cnt = $("#conf_count").val();
