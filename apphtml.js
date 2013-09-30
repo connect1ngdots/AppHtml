@@ -265,8 +265,8 @@
         //Entity毎にセット
         if (knd == "song") {
             x.name = data.trackCensoredName;
-            if (phg != "") x.url = PHGUrl(data.collectionViewUrl, phg);
-            else x.url = data.collectionViewUrl;
+            if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
+            else x.url = data.trackViewUrl;
             x.preview = data.previewUrl;
             if (eval(data.trackPrice) == 0) x.price = '無料';
             else x.price = '￥' + fmtNumber(data.trackPrice);
@@ -284,13 +284,14 @@
         }
         if (knd == "album") {
             x.name = data.collectionCensoredName;
-            if(phg != "") x.url = PHGUrl(data.collectionViewUrl, phg);
-            else x.url = data.collectionViewUrl;
+            if(phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
+            else x.url = data.trackViewUrl;
             if (eval(data.collectionPrice) == 0) x.price = '無料';
             else x.price = '￥' + fmtNumber(data.collectionPrice);
             x.category = data.primaryGenreName;
             x.trackcnt = data.trackCount + '曲';
-            x.pubdate = data.releaseDate.slice(0, 4) + '年';
+            x.pubdate = data.releaseDate.replace(/-/g, '/');
+            x.pubdate = x.pubdate.replace(/T.*/g, '');
             x.icon60url = data.artworkUrl60;
             x.icon100url = data.artworkUrl100;
             x.artist = data.artistName;
@@ -317,7 +318,8 @@
             x.category = data.primaryGenreName;
             if (!data.trackTimeMillis) x.playtime = 'データなし';
             else x.playtime = sizeTime(data.trackTimeMillis);
-            x.pubdate = data.releaseDate.slice(0, 4) + '年';
+            x.pubdate = data.releaseDate.replace(/-/g, '/');
+            x.pubdate = x.pubdate.replace(/T.*/g, '');
             x.icon60url = data.artworkUrl60;
             x.icon100url = data.artworkUrl100;
             x.artist = data.artistName;
@@ -330,7 +332,7 @@
             } else {
                 x.shortdesc = data.shortDescription;
             }
-            if (!data.longDescription) x.longdesc = '';
+            if (!data.longDescription) x.desc = '';
             else x.desc = data.longDescription;
 			x.badgeL = '<a href="' + x.url + '" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.png) no-repeat;width:110px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg);}"></a>';
 			x.badgeS = '<a href="' + x.url + '" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.png) no-repeat;width:45px;height:15px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets//images/web/linkmaker/badge_itunes-sm.svg);}"></a>';
@@ -341,10 +343,17 @@
             x.name = data.trackCensoredName;
             if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
             else x.url = data.trackViewUrl;
-            x.price = data.price;
+			if (!data.price) {
+                x.price = '';
+            } else if (eval(data.price) == 0) {
+                x.price = '無料';
+            } else {
+                x.price = '￥' + fmtNumber(data.price);
+            }
             x.category = data.genres[0];
             for (i = 1; i < data.genres.length; i++) x.category = x.category + '、 ' + data.genres[i];
-            x.pubdate = data.releaseDate.slice(0, 4) + '年' + Number(data.releaseDate.slice(5, 7)) + '月' + Number(data.releaseDate.slice(8, 10)) + '日';
+            x.pubdate = data.releaseDate.replace(/-/g, '/');
+            x.pubdate = x.pubdate.replace(/T.*/g, '');
 			x.icon60url = data.artworkUrl60;
             x.icon100url = data.artworkUrl100;
             x.artist = data.artistName;
@@ -376,8 +385,7 @@
             if (phg != "") x.artisturl = PHGUrl(data.artistViewUrl, phg);
             else x.artisturl = data.artistViewUrl;
 			x.seller = data.sellerName;
-            if (phg != "") x.sellerurl = PHGUrl(data.sellerUrl, phg);
-            else x.sellerurl = data.sellerUrl;
+			x.sellerurl = data.sellerUrl;
             x.desc = data.description;
             x.descnew = data.releaseNotes;
             x.version = data.version;
