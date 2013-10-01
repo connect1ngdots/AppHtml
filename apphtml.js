@@ -420,14 +420,14 @@
                 if (x.os == '') x.os = x.moveos.replace(/.*iPad.*/g, 'iPad');
                 for (i = 0; i < data.features.length; i++) {
                 	if (data.features[i] == 'gameCenter') {
-                    x.gamecenter = 'GameCenter対応';
+                    x.gamecenter = 'GameCenter対応';break;
 					}
 				}
 				for (i = 0; i < data.features.length; i++) {
 					if (data.features[i] == 'iosUniversal') {
-						x.univ = 'iPhone/iPadの両方に対応';
+						x.univ = 'iPhone/iPadの両方に対応';break;
 					}
-				}
+				}	
                 //if (data.isGameCenterEnabled) x.gamecenter = 'GameCenter対応';
                 //if (!x.gamecenter) x.gamecenter = "";
                 //if (data.ipadScreenshotUrls[0] && data.screenshotUrls[0]) x.univ = 'iPhone/iPadの両方に対応';
