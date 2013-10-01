@@ -418,10 +418,20 @@
                 x.os = x.moveos.replace(/.*all.*/g, 'iPhone');
                 if (x.os == '') x.os = x.moveos.replace(/.*iPhone.*/g, 'iPhone');
                 if (x.os == '') x.os = x.moveos.replace(/.*iPad.*/g, 'iPad');
-                if (data.isGameCenterEnabled) x.gamecenter = 'GameCenter対応';
-                if (!x.gamecenter) x.gamecenter = "";
-                if (data.ipadScreenshotUrls[0] && data.screenshotUrls[0]) x.univ = 'iPhone/iPadの両方に対応';
-                if (!x.univ) x.univ = "";
+                for (i = 0; i < data.features.length; i++) {
+                	if (data.features[i] == 'gameCenter') {
+                    x.gamecenter = 'GameCenter対応';
+					}
+				}
+				for (i = 0; i < data.features.length; i++) {
+					if (data.features[i] == 'iosUniversal') {
+						x.univ = 'iPhone/iPadの両方に対応';
+					}
+				}alert(x.gamecenter);alert(x.univ);
+                //if (data.isGameCenterEnabled) x.gamecenter = 'GameCenter対応';
+                //if (!x.gamecenter) x.gamecenter = "";
+                //if (data.ipadScreenshotUrls[0] && data.screenshotUrls[0]) x.univ = 'iPhone/iPadの両方に対応';
+                //if (!x.univ) x.univ = "";
             }
             x.lang = data.languageCodesISO2A[0];
             for (i = 1; i < data.languageCodesISO2A.length; i++) x.lang = x.lang + ', ' + data.languageCodesISO2A[i];
@@ -437,16 +447,16 @@
                             data.screenshotUrls[i] + '" ' +
                             'width="' + data['image' + (i + 1) + 'width'] + 'px">';
                     }
-                    //                }
-                    //                for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
-                    //                    if (data.ipadScreenshotUrls[i]) {
-                    //                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
-                    //                            data.ipadScreenshotUrls[i] + '" ' +
-                    //                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
-                    //                    }
+                                    }
+                                    for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
+                                        if (data.ipadScreenshotUrls[i]) {
+                                            x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
+                                                data.ipadScreenshotUrls[i] + '" ' +
+                                                'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
+                                        }
                 }
             }
-            // iPadの場合
+            // iPadの場合は、UnivスクショにiPhone画像をセット（image, univimage）
             if (knd == 'iPadSoftware') {
                 for (i = 0; i < data.ipadScreenshotUrls.length; i++) {
                     if (data.ipadScreenshotUrls[i]) {
@@ -454,13 +464,13 @@
                             data.ipadScreenshotUrls[i] + '" ' +
                             'width="' + data['image' + (i + 1) + 'width'] + 'px">';
                     }
-                    //                }
-                    //                for (i = 0; i < data.screenshotUrls.length; i++) {
-                    //                    if (data.screenshotUrls[i]) {
-                    //                        x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
-                    //                            data.screenshotUrls[i] + '" ' +
-                    //                            'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
-                    //                    }
+                                    }
+                                    for (i = 0; i < data.screenshotUrls.length; i++) {
+                                        if (data.screenshotUrls[i]) {
+                                            x['univimage' + (i + 1)] = '<img alt="univss' + (i + 1) + '" src="' +
+                                                data.screenshotUrls[i] + '" ' +
+                                                'width="' + data['univimage' + (i + 1) + 'width'] + 'px">';
+                                        }
                 }
             }
             // Macの場合は、スクショのみでUnivスクショは無し（image）
