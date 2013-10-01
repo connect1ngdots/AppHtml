@@ -427,7 +427,7 @@
 					if (data.features[i] == 'iosUniversal') {
 						x.univ = 'iPhone/iPadの両方に対応';
 					}
-				}alert(x.gamecenter);alert(x.univ);
+				}
                 //if (data.isGameCenterEnabled) x.gamecenter = 'GameCenter対応';
                 //if (!x.gamecenter) x.gamecenter = "";
                 //if (data.ipadScreenshotUrls[0] && data.screenshotUrls[0]) x.univ = 'iPhone/iPadの両方に対応';
