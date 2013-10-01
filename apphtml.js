@@ -272,7 +272,8 @@
             else x.price = '￥' + fmtNumber(data.trackPrice);
             x.category = data.primaryGenreName;
             x.trackcnt = data.trackCount + '曲';
-            x.pubdate = data.releaseDate.slice(0, 4) + '年';
+            x.pubdate = data.releaseDate.replace(/-/g, '/');
+            x.pubdate = x.pubdate.replace(/T.*/g, '');
             x.icon60url = data.artworkUrl60;
             x.icon100url = data.artworkUrl100;
             x.artist = data.artistName;
