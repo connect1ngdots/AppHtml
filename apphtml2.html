@@ -182,7 +182,7 @@ function bmCreate() {
 	bmlt = bmlt.replace("%knd%", d.getElementById("knd").value);
 	bmlt = bmlt.replace("%phg%", d.getElementById("phg").value);
 	//bmlt = bmlt.replace("%ct%", d.getElementById("ct").value);
-	bmlt = bmlt.replace("%fmt%", escape(d.getElementById("code").value));
+	bmlt = bmlt.replace("%fmt%", encodeURIComponent(d.getElementById("code").value));
 
 	// Bookmarkletブックマーク表示
 	var html = 
