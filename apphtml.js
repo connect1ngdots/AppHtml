@@ -252,6 +252,11 @@
             if (out == "textwell") {
                 w.location = 'textwell:///insert?text=' + encodeURIComponent(x);
             }
+            // 出力方法ごとの処理（はてなブログで新規作成）
+            if (out == "hatenablog") {
+                w.location = 'hatenablog:///new?title=new%20post&body=' + encodeURIComponent(x);
+            }
+
         }
         step = 3;
     }
