@@ -37,7 +37,7 @@ function bmCreate() {
 	bmlt = bmlt.replace("%phg%", d.getElementById("phg").value);//PHGアフィリエイトIDを追加
 	bmlt = bmlt.replace("%scs%", d.getElementById("scs").value);
 	bmlt = bmlt.replace("%ipd%", d.getElementById("ipd").value);
-	bmlt = bmlt.replace("%fmt%", encodeURIComponent(d.getElementById("code").value));
+	bmlt = bmlt.replace("%fmt%", escape(d.getElementById("code").value));
 
 	// Bookmarkletブックマーク表示
 	var html = 

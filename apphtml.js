@@ -14,7 +14,7 @@
         knd = script.knd,
         out = script.out,
         phg = script.phg,
-        fmt = decodeURIComponent(script.fmt);
+        fmt = unescape(script.fmt);
 
     // 見ているサイトがiTunesWebだった場合
     if (location.href.indexOf("https://itunes.apple.com/") != -1) {
