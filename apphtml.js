@@ -256,7 +256,10 @@
             if (out == "hatenablog") {
                 w.location = 'hatenablog:///new?title=new%20post&body=' + encodeURIComponent(x);
             }
-
+            // 出力方法ごとの処理（Draftsで新規作成）
+            if (out == "drafts") {
+                w.location = 'drafts://x-callback-url/create?text=' + encodeURIComponent(x);
+            }
         }
         step = 3;
     }
