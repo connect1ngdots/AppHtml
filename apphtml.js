@@ -6,7 +6,8 @@
     var json = {}, ssMax = 0,
         ssCtr = 0,
         hitApp = 0,
-        appId = "";
+        appId = "",
+        tiffFlg = "false";
 
     // 親JSからパラメータを取得
     var script = d.getElementById("bmlt");
@@ -14,6 +15,8 @@
         knd = script.knd,
         out = script.out,
         phg = script.phg,
+        scs = script.scs,
+        ipd = script.ipd,
         fmt = decodeURIComponent(script.fmt);
 
     // 見ているサイトがiTunesWebだった場合
@@ -58,9 +61,13 @@
             break;
         case 2:
             step = 0;
-            dispData();
+            getWidth();
             break;
         case 3:
+            step = 0;
+            dispData();
+            break;
+        case 4:
             while (d.getElementById("bmlt")) d.getElementById("bmlt").parentNode.removeChild(d.getElementById("bmlt"));
             clearInterval(timerId);
             timerId = null;
@@ -95,7 +102,7 @@
         w.result = function (data) {
             if (data.resultCount == 0) {
                 prompt('Result', 'Not Found ...');
-                step = 3;
+                step = 4;
                 return;
             }
             //artworkUrl100がないものをresultsから削除
@@ -143,12 +150,71 @@
                     return;
                 }
             }
-            step = 3;
+            step = 4;
         }
     }
 
-    // 結果の整理と出力方法ごとの処理
+	// スクショの縦横チェック（裏で画像をロード）
+	function getWidth() {
+		var i;
+		ssMax = json[hitApp].screenshotUrls.length;
+		if (knd == 'software') {
+			ssMax = ssMax + json[hitApp].ipadScreenshotUrls.length;
+			for (i = 0; i < json[hitApp].screenshotUrls.length; i++) {
+				loadImg(i, "image", json[hitApp].screenshotUrls[i], eval(scs));
+			}
+			for (i = 0; i < json[hitApp].ipadScreenshotUrls.length; i++) {
+				loadImg(i, "univimage", json[hitApp].ipadScreenshotUrls[i], eval(scs) * eval(ipd));
+			}
+		}
+		if (knd == 'iPadSoftware') {
+			ssMax = ssMax + json[hitApp].ipadScreenshotUrls.length;
+			for (i = 0; i < json[hitApp].ipadScreenshotUrls.length; i++) {
+				loadImg(i, "image", json[hitApp].ipadScreenshotUrls[i], eval(scs));
+			}
+			for (i = 0; i < json[hitApp].screenshotUrls.length; i++) {
+				loadImg(i, "univimage", json[hitApp].screenshotUrls[i], eval(scs) * eval(ipd));
+			}
+		}
+		if (knd == 'macSoftware') {
+			for (i = 0; i < json[hitApp].screenshotUrls.length; i++) {
+				loadImg(i, "image", json[hitApp].screenshotUrls[i], eval(scs));
+			}
+		}
+	}
 
+	// 縦横判定の結果としてWidthを計算
+	function loadImg(i, type, src, x) {
+		var aw, ah, img = new Image(), ret;
+
+		// スクショが.tifの場合にはスキップ
+		if (src.indexOf(".tif") != -1) {
+			ssCtr = ssCtr + 1;
+			json[hitApp][type + (i + 1) + "width"] = 0;
+			if (ssCtr == ssMax) step = 3;
+			tiffFlg = "true";
+			return;
+		}
+
+		img.src = src;
+		img.onload = function () {
+			aw = img.width;
+			ah = img.height;
+			if (aw > ah) {
+				ret = Math.round(x);
+			} else {
+				ret = Math.round(x * (aw / ah));
+			}
+			img.onload = "";
+			img = void 0;
+			ssCtr = ssCtr + 1;
+			json[hitApp][type + (i + 1) + "width"] = ret;
+			// alert(type + (i + 1) + 'width, aw=' + aw + ', ah=' + ah + ', ret=' + ret + ', x=' + x);
+			if (ssCtr == ssMax) step = 3;
+		}
+	}
+
+    // 結果の整理と出力方法ごとの処理
     function dispData() {
         var x = '',
             chk = '';
@@ -165,22 +231,23 @@
         }
         x = pData + '\n';
         chk = pData;
+        if (tiffFlg == "true") prompt("Screenshots cannot be displayed because of TIFF files.","Warning...");
         if (chk != '') {
             // 出力方法ごとの処理（プレビュー表示）
-            if (out == "preview") {
-                d.body.innerHTML =
-                    '<div id="bkmlt_preview">' +
-                    "<form><input type='button' value='プレビュー表示を消す' onclick='javascript:" +
-                    'var a=document.getElementById("bkmlt_preview");a.parentNode.removeChild(a);' +
-                    "'>　<input type='button' value='HTMLを選択する' onclick='javascript:" +
-                    'var a=document.getElementById("bkmklt_ret");a.focus();' +
-                    "'>　<input type='button' value='HTMLの内容でプレビューを書き直す' onclick='javascript:" +
-                    'var a=document.getElementById("bkmklt_ret").value;' +
-                    'document.getElementById("bkmklt_rewrite").innerHTML=a;' +
-                    "'></form>" + '<textarea style="width:99%;font-size:80%;" rows="10" id="bkmklt_ret"' +
-                    'onfocus="javascript:this.select();">' + x + '</textarea><br><br><div id="bkmklt_rewrite">' +
-                    x + '</div></div>' + d.body.innerHTML;
-            }
+			if (out == "preview" ) {
+				d.body.innerHTML = 
+				'<div id="bkmlt_preview">' +
+				"<form><input type='button' value='プレビュー表示を消す' onclick='javascript:" +
+				'var a=document.getElementById("bkmlt_preview");a.parentNode.removeChild(a);' +
+				"'>　<input type='button' value='HTMLを選択する' onclick='javascript:" +
+				'var a=document.getElementById("bkmklt_ret");a.focus();' +
+				"'>　<input type='button' value='HTMLの内容でプレビューを書き直す' onclick='javascript:" +
+				'var a=document.getElementById("bkmklt_ret").value;' +
+				'document.getElementById("bkmklt_rewrite").innerHTML=a;' +
+				"'></form>" + '<textarea style="width:99%;font-size:80%;" rows="10" id="bkmklt_ret"' +
+				'onfocus="javascript:this.select();">' + x + '</textarea><br><br><div id="bkmklt_rewrite">' +
+				 x + '</div></div>' + d.body.innerHTML;
+			}
             // 出力方法ごとの処理（ポップアップ表示）
             if (out == "popup") {
                 prompt("result", x);
@@ -261,7 +328,7 @@
                 w.location = 'drafts://x-callback-url/create?text=' + encodeURIComponent(x);
             }
         }
-        step = 3;
+        step = 4;
     }
 
     // Bookmarklet予約語へのセット
