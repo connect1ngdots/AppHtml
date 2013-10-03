@@ -208,7 +208,7 @@ function search() {
   e.phg = $("#conf_aff").val();
   e.scs = getScs(kind);
   e.ipd = getIpd(kind);
-  e.fmt = escape(fmt);
+  e.fmt = encodeURIComponent(fmt);
   e.charset = 'utf-8';
   e.src = url;
   e.id = 'bmlt';
