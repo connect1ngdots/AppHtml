@@ -120,8 +120,10 @@
                     if (!json[i].supportedDevices) json[i].supportedDevices = "";
                 }
                 if (knd == "movie") {
-                    json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
-                    json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');
+                    if (json[i].shortDescription)
+                        json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
+                    if (json[i].shortDescription)
+                        json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');
                 }
                 var z = json[i],
                     x = new Array(bmAry);
@@ -157,7 +159,11 @@
 	// スクショの縦横チェック（裏で画像をロード）
 	function getWidth() {
 		var i;
-		ssMax = json[hitApp].screenshotUrls.length;
+        if (knd != "software" && knd != "iPadSoftware" && knd != "macSoftware") {
+            step = 3;
+            return;
+        }
+        ssMax = json[hitApp].screenshotUrls.length;
 		if (knd == 'software') {
 			ssMax = ssMax + json[hitApp].ipadScreenshotUrls.length;
 			for (i = 0; i < json[hitApp].screenshotUrls.length; i++) {
