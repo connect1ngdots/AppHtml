@@ -24,7 +24,7 @@ textarea{width:100%;color:#3333FF}
 <body> 
 <div id="inputHtml"></div>
 <h2>Apphtmlブックマークレット・メーカー</h2>
-<span style="font-style:italic;font-size:12px">Last updated: August 25, 2013</span>
+<span style="font-style:italic;font-size:12px">Last updated: October 4, 2013</span>
 <ul>
 <li>iTunes Store、App Store、iBookstore、および Mac App Store 上のコンテンツへのリンク作成ツールです。</li>
 <li>iTunesアフィリエイトプログラムのPHG対応リンクを作成することが可能です。</li>
@@ -78,6 +78,9 @@ textarea{width:100%;color:#3333FF}
 <input type="hidden" id="out" value="preview">
 <input type="hidden" id="cnt" value="8">
 
+<h4>スクリーンショット長辺ピクセルとユニバーサルのスクリーンショット拡大率を入力して下さい</h4>
+<input type="text" size="30" id="scs" value=0 onChange="javascript:bmClear();" disabled><input type="text" size="30" id="ipd" value=0 onchange="javascript:bmClear();" disabled>
+
 <h4>PHGアフィリエイト（オプション）</h4>
 ID <input type="text" size="20" id="phg" value="" onchange="javascript:bmClear();">
 <!-- キャンペーン・テキスト <input type="text" size="20" id="ct" value="" onchange="javascript:bmClear();"> -->
@@ -115,6 +118,8 @@ function load_config() {
 		var config_phg = storage.get("ithtml_phg");
 		//var config_ct = storage.get("ithtml_ct");
 		var config_cnt = storage.get("ithtml_cnt");
+		var config_scs = storage.get("ithtml_scs");
+		var config_ipd = storage.get("ithtml_ipd");
 		var config_out = storage.get("ithtml_out");
 		var config_code = storage.get("ithtml_code");
 
@@ -123,6 +128,8 @@ function load_config() {
 		d.getElementById("phg").value = config_phg;
 		//d.getElementById("ct").value = config_ct;
 		d.getElementById("cnt").value = config_cnt;
+		d.getElementById("scs").value = config_scs;
+		d.getElementById("ipd").value = config_ipd;
 		d.getElementById("out").value = config_out;
 		d.getElementById("code").value = config_code;
 		d.getElementById("loaded").innerHTML = '<p style="font-size:13px;color:#0000ff">'+ config_saved +'に検索対象"'+config_bmn+'"として保存された設定をロードしました</p>';
@@ -145,6 +152,8 @@ function save_config() {
 	storage.set("ithtml_phg", d.getElementById("phg").value);
 	//storage.set("ithtml_ct", d.getElementById("ct").value);
 	storage.set("ithtml_cnt", d.getElementById("cnt").value);
+	storage.set("ithtml_scs", d.getElementById("scs").value);
+	storage.set("ithtml_ipd", d.getElementById("ipd").value);
 	storage.set("ithtml_out", d.getElementById("out").value);
 	storage.set("ithtml_code", d.getElementById("code").value);
 	alert("設定を保存しました");
@@ -175,7 +184,7 @@ function bmCreate() {
     }
 	var bmlt = "javascript:(function(){var d=document,e=d.createElement('script'),url='" + 
 	bmBase + "';if(!url.match(/\\?/))url+='?t='+(new%20Date()).getTime();" +
-    "e.out='%out%';e.cnt='%cnt%';e.knd='%knd%';e.phg='%phg%';e.fmt='%fmt%';" +
+    "e.out='%out%';e.cnt='%cnt%';e.knd='%knd%';e.phg='%phg%';e.scs='%scs%';e.ipd='%ipd%';e.fmt='%fmt%';" +
 	"e.charset='utf-8';e.src=url;e.id='bmlt';d.body.appendChild(e);})();";
 
 	// フォームの値をセット
@@ -184,6 +193,8 @@ function bmCreate() {
 	bmlt = bmlt.replace("%knd%", d.getElementById("knd").value);
 	bmlt = bmlt.replace("%phg%", d.getElementById("phg").value);
 	//bmlt = bmlt.replace("%ct%", d.getElementById("ct").value);
+    bmlt = bmlt.replace("%scs%", d.getElementById("scs").value);
+    bmlt = bmlt.replace("%ipd%", d.getElementById("ipd").value);
 	bmlt = bmlt.replace("%fmt%", encodeURIComponent(d.getElementById("code").value));
 
 	// Bookmarkletブックマーク表示
@@ -327,13 +338,48 @@ function createSelection( selObj, headings, aryValue, aryText ){
 function SelectEntity(obj){
 	createSelection(form1.elements['sel_template'], "（書式テンプレート）", template[obj.value], template[obj.value]);
 	var d = document;
-	if (obj.value == 'iPhone')  d.getElementById("knd").value = "software", d.getElementById("bmn").value = "Apphtml(iPhone)";
-	if (obj.value == 'iPad')  d.getElementById("knd").value = "iPadSoftware", d.getElementById("bmn").value = "AppHtml(iPad)";
-	if (obj.value == 'Mac')  d.getElementById("knd").value = "macSoftware", d.getElementById("bmn").value = "AppHtml(Mac)";	
-	if (obj.value == 'Song')  d.getElementById("knd").value = "song", d.getElementById("bmn").value = "MusicHtml(Song)";
-	if (obj.value == 'Album') d.getElementById("knd").value = "album", d.getElementById("bmn").value = "MusicHtml(Album)";
-	if (obj.value == 'Movie') d.getElementById("knd").value = "movie", d.getElementById("bmn").value = "MovieHtml";
-	if (obj.value == 'eBook') d.getElementById("knd").value = "ebook", d.getElementById("bmn").value = "iBooksHtml";
+	if (obj.value == 'iPhone')
+        d.getElementById("knd").value = "software",
+        d.getElementById("bmn").value = "AppHtml(iPhone)",
+        d.getElementById("scs").value = "288",
+        d.getElementById("ipd").value = "1.5",
+        d.form1.scs.disabled=false,d.form1.ipd.disabled=false;
+	if (obj.value == 'iPad')
+        d.getElementById("knd").value = "iPadSoftware",
+        d.getElementById("bmn").value = "AppHtml(iPad)",
+        d.getElementById("scs").value = "432",
+        d.getElementById("ipd").value = "0.67",
+        d.form1.scs.disabled=false,d.form1.ipd.disabled=false;
+	if (obj.value == 'Mac')
+        d.getElementById("knd").value = "macSoftware",
+        d.getElementById("bmn").value = "AppHtml(Mac)",
+        d.getElementById("scs").value = "480",
+        d.getElementById("ipd").value = "0",
+        d.form1.scs.disabled=false,d.form1.ipd.disabled=false;
+	if (obj.value == 'Song')
+        d.getElementById("knd").value = "song",
+        d.getElementById("bmn").value = "MusicHtml(Song)",
+        d.getElementById("scs").value = "0",
+        d.getElementById("ipd").value = "0",
+        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
+	if (obj.value == 'Album')
+        d.getElementById("knd").value = "album",
+        d.getElementById("bmn").value = "MusicHtml(Album)",
+        d.getElementById("scs").value = "0",
+        d.getElementById("ipd").value = "0",
+        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
+	if (obj.value == 'Movie')
+        d.getElementById("knd").value = "movie",
+        d.getElementById("bmn").value = "MovieHtml",
+        d.getElementById("scs").value = "0",
+        d.getElementById("ipd").value = "0",
+        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
+	if (obj.value == 'eBook')
+        d.getElementById("knd").value = "ebook",
+        d.getElementById("bmn").value = "iBooksHtml",
+        d.getElementById("scs").value = "0",
+        d.getElementById("ipd").value = "0",
+        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
 	//d.getElementById("knd").value = obj.value;
 }
 
