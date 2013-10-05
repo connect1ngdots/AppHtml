@@ -122,7 +122,7 @@
                 if (knd == "movie") {
                     if (json[i].shortDescription)
                         json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
-                    if (json[i].shortDescription)
+                    if (json[i].longDescription)
                         json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');
                 }
                 var z = json[i],
