@@ -94,86 +94,92 @@ ID <input type="text" size="20" id="phg" value="" onchange="javascript:bmClear()
 <!--
 
 
-var d = document, w = window;
+var d = document,
+    w = window;
 
 var db = {
-	set: function(key, obj) {
-		w.localStorage.setItem(key, JSON.stringify(obj));
-	},
-	get: function(key) {
-		return JSON.parse(w.localStorage.getItem(key));
-	},
-	clear: function() {
-		w.localStorage.clear();
-	}
+    set: function(key, obj) {
+        w.localStorage.setItem(key, JSON.stringify(obj));
+    },
+    get: function(key) {
+        return JSON.parse(w.localStorage.getItem(key));
+    },
+    clear: function() {
+        w.localStorage.clear();
+    }
 };
 
 var storage = db;
 
 function load_config() {
-	if(!storage.get("ithtml_knd")) {alert("設定が保存されていません"); return;}
-		var config_knd = storage.get("ithtml_knd");
-		var config_saved = storage.get("ithtml_saved");
-		var config_bmn = storage.get("ithtml_bmn");
-		var config_phg = storage.get("ithtml_phg");
-		//var config_ct = storage.get("ithtml_ct");
-		var config_cnt = storage.get("ithtml_cnt");
-		var config_scs = storage.get("ithtml_scs");
-		var config_ipd = storage.get("ithtml_ipd");
-		var config_out = storage.get("ithtml_out");
-		var config_code = storage.get("ithtml_code");
+    if (!storage.get("ithtml_knd")) {
+      alert("設定が保存されていません");
+      return;
+    }
+    var config_knd = storage.get("ithtml_knd");
+    var config_saved = storage.get("ithtml_saved");
+    var config_bmn = storage.get("ithtml_bmn");
+    var config_phg = storage.get("ithtml_phg");
+    var config_cnt = storage.get("ithtml_cnt");
+    var config_scs = storage.get("ithtml_scs");
+    var config_ipd = storage.get("ithtml_ipd");
+    var config_out = storage.get("ithtml_out");
+    var config_code = storage.get("ithtml_code");
 
-		d.getElementById("knd").value = config_knd;
-		d.getElementById("bmn").value = config_bmn;
-		d.getElementById("phg").value = config_phg;
-		//d.getElementById("ct").value = config_ct;
-		d.getElementById("cnt").value = config_cnt;
-		d.getElementById("scs").value = config_scs;
-		d.getElementById("ipd").value = config_ipd;
-		d.getElementById("out").value = config_out;
-		d.getElementById("code").value = config_code;
-		d.getElementById("loaded").innerHTML = '<p style="font-size:13px;color:#0000ff">'+ config_saved +'に検索対象"'+config_bmn+'"として保存された設定をロードしました</p>';
+    d.getElementById("knd").value = config_knd;
+    d.getElementById("bmn").value = config_bmn;
+    d.getElementById("phg").value = config_phg;
+    d.getElementById("cnt").value = config_cnt;
+    d.getElementById("scs").value = config_scs;
+    d.getElementById("ipd").value = config_ipd;
+    d.getElementById("out").value = config_out;
+    d.getElementById("code").value = config_code;
+    d.getElementById("loaded").innerHTML = '<p style="font-size:13px;color:#0000ff">'
+            + config_saved
+            +'に検索対象"'
+            + config_bmn
+            + '"として保存された設定をロードしました</p>';
 }
 
 function save_config() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var m = now.getMonth() + 1;
+    var dd = now.getDate();
+    var h = now.getHours();
+    var mm = now.getMinutes();
+    var s = now.getSeconds();
+    saved_date = y+"/"+m+"/"+dd+"/ "+h+":"+mm+":"+s;
 
-	var now = new Date();
-	var y = now.getFullYear();
-	var m = now.getMonth() + 1;
-	var dd = now.getDate();
-	var h = now.getHours();
-	var mm = now.getMinutes();
-	var s = now.getSeconds();
-	saved_date = y+"/"+m+"/"+dd+"/ "+h+":"+mm+":"+s;
-
-	storage.set("ithtml_knd", d.getElementById("knd").value);
-	storage.set("ithtml_bmn", d.getElementById("bmn").value);
-	storage.set("ithtml_saved", saved_date);
-	storage.set("ithtml_phg", d.getElementById("phg").value);
-	//storage.set("ithtml_ct", d.getElementById("ct").value);
-	storage.set("ithtml_cnt", d.getElementById("cnt").value);
-	storage.set("ithtml_scs", d.getElementById("scs").value);
-	storage.set("ithtml_ipd", d.getElementById("ipd").value);
-	storage.set("ithtml_out", d.getElementById("out").value);
-	storage.set("ithtml_code", d.getElementById("code").value);
-	alert("設定を保存しました");
+    storage.set("ithtml_knd", d.getElementById("knd").value);
+    storage.set("ithtml_bmn", d.getElementById("bmn").value);
+    storage.set("ithtml_saved", saved_date);
+    storage.set("ithtml_phg", d.getElementById("phg").value);
+    storage.set("ithtml_cnt", d.getElementById("cnt").value);
+    storage.set("ithtml_scs", d.getElementById("scs").value);
+    storage.set("ithtml_ipd", d.getElementById("ipd").value);
+    storage.set("ithtml_out", d.getElementById("out").value);
+    storage.set("ithtml_code", d.getElementById("code").value);
+    alert("設定を保存しました");
 };
 
 function bmCreate() {
-	var d = document;
+    var d = document;
 
-	// エラーハンドリング
-	if (d.getElementById("out").value=="" || form1.sel_entity.value == "" || d.getElementById("cnt").value=="") {
-		alert("検索対象、出力先、検索件数、出力方法は必ず選択してください");
-		return;
-	}
+    // エラーハンドリング
+    if (d.getElementById("out").value== ""
+          || form1.sel_entity.value == ""
+          || d.getElementById("cnt").value == "") {
+        alert("検索対象、出力先、検索件数、出力方法は必ず選択してください");
+        return;
+    }
 
-	if (!d.getElementById("code").value) {
-		alert("書式テンプレートの選択が必要です!!");
-		return;
-	}
+    if (!d.getElementById("code").value) {
+        alert("書式テンプレートの選択が必要です!!");
+        return;
+    }
 
-	// Bookmarklet（本体と引数定義）
+    // Bookmarklet（本体と引数定義）
     var bmBase = "" + document.location;
     {
         var pos = bmBase.lastIndexOf('/');
@@ -182,205 +188,214 @@ function bmCreate() {
         }
         bmBase = bmBase + 'apphtml.js';
     }
-	var bmlt = "javascript:(function(){var d=document,e=d.createElement('script'),url='" + 
-	bmBase + "';if(!url.match(/\\?/))url+='?t='+(new%20Date()).getTime();" +
-    "e.out='%out%';e.cnt='%cnt%';e.knd='%knd%';e.phg='%phg%';e.scs='%scs%';e.ipd='%ipd%';e.fmt='%fmt%';" +
-	"e.charset='utf-8';e.src=url;e.id='bmlt';d.body.appendChild(e);})();";
+    var bmlt = "javascript:(function(){var d=document,e=d.createElement('script'),url='"
+            + bmBase
+            + "';if(!url.match(/\\?/))url+='?t='+(new%20Date()).getTime();"
+            + "e.out='%out%';e.cnt='%cnt%';e.knd='%knd%';e.phg='%phg%';e.scs='%scs%';e.ipd='%ipd%';e.fmt='%fmt%';"
+            + "e.charset='utf-8';e.src=url;e.id='bmlt';d.body.appendChild(e);})();";
 
-	// フォームの値をセット
-	bmlt = bmlt.replace("%out%", d.getElementById("out").value);
-	bmlt = bmlt.replace("%cnt%", d.getElementById("cnt").value);
-	bmlt = bmlt.replace("%knd%", d.getElementById("knd").value);
-	bmlt = bmlt.replace("%phg%", d.getElementById("phg").value);
-	//bmlt = bmlt.replace("%ct%", d.getElementById("ct").value);
+    // フォームの値をセット
+    bmlt = bmlt.replace("%out%", d.getElementById("out").value);
+    bmlt = bmlt.replace("%cnt%", d.getElementById("cnt").value);
+    bmlt = bmlt.replace("%knd%", d.getElementById("knd").value);
+    bmlt = bmlt.replace("%phg%", d.getElementById("phg").value);
     bmlt = bmlt.replace("%scs%", d.getElementById("scs").value);
     bmlt = bmlt.replace("%ipd%", d.getElementById("ipd").value);
-	bmlt = bmlt.replace("%fmt%", encodeURIComponent(d.getElementById("code").value));
+    bmlt = bmlt.replace("%fmt%", encodeURIComponent(d.getElementById("code").value));
 
-	// Bookmarkletブックマーク表示
-	var html = 
-	"<p><strong>ブックマーク名は登録後に変更できます</strong><br>" +
-	'<a href="' + bmlt + '">' + d.getElementById("bmn").value + '</a> - 実行またはPC用ブックマーク<br>' +
-	'<a target=_blank href="http://daisukeblog.com/etc/?' + bmlt + '">' + d.getElementById("bmn").value + '</a> - iOSブックマーク登録用' + '</br><strong style="font-size: 85%;color: red;">登録後に動かない場合、登録内容を編集して以下を上書きして下さい!!</strong><br>' +
-	'<textarea style="width:410px;height:100px;padding:2px;">' + bmlt + '</textarea><br>' +
-	'<strong style="font-size: 85%;color: red;">Chromeで登録すると動かないんですヽ(;´Д｀)ﾉ</strong><br>' +
-	"<br>";
-	d.getElementById("bmHtml").innerHTML = html;
+    // Bookmarkletブックマーク表示
+    var html = 
+    "<p><strong>ブックマーク名は登録後に変更できます</strong><br>"
+    + '<a href="' + bmlt + '">' + d.getElementById("bmn").value + '</a> - 実行またはPC用ブックマーク<br>'
+    + '<a target=_blank href="http://daisukeblog.com/etc/?' + bmlt + '">'
+    + d.getElementById("bmn").value + '</a> - iOSブックマーク登録用</br>'
+    + '<strong style="font-size: 85%;color: red;">登録後に動かない場合、登録内容を編集して以下を上書きして下さい!!</strong><br>'
+    + '<textarea style="width:410px;height:100px;padding:2px;">' + bmlt + '</textarea><br>'
+    + '<strong style="font-size: 85%;color: red;">Chromeで登録すると動かないんですヽ(;´Д｀)ﾉ</strong><br>'
+    + "<br>";
+    d.getElementById("bmHtml").innerHTML = html;
 }
 
 function bmClear() {
-	var d = document;
-	d.getElementById("bmHtml").innerHTML = "";
-	d.getElementById("loaded").innerHTML = "";
+    var d = document;
+    d.getElementById("bmHtml").innerHTML = "";
+    d.getElementById("loaded").innerHTML = "";
 }
 
 function remove_config() {
-	if(!storage.get("ithtml_knd")) {
-		alert("設定が保存されていません");
-	} else {
-		var chk = confirm("削除しますか？");
-		if (chk) {
-			storage.clear();
-		}
-	}
+    if (!storage.get("ithtml_knd")) {
+        alert("設定が保存されていません");
+    } else {
+        var chk = confirm("削除しますか？");
+        if (chk) {
+            storage.clear();
+        }
+    }
 }
 
 function clickOutr(value) {
-	var d = document;
-	d.getElementById("out").value = value;
+    var d = document;
+    d.getElementById("out").value = value;
 }
 
 function loadFmt() {
-	var ent = form1.sel_entity.value;
-	var temp = form1.sel_template.value;
+    var ent = form1.sel_entity.value;
+    var temp = form1.sel_template.value;
 
 //iPhone and iPad Template
-	if(ent == "iPhone" || ent == "iPad"){
-		if(temp == "小さいボタン")
-			def_temp = '${badgeS}';
-		if(temp == "大きいボタン")
-			def_temp = '${badgeL}';
-		if(temp == "テキストのみ")
-			def_temp = '${textonly}';
-		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg"></div>';
-		if(temp == "予約語一覧")
-			def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">販売者名 ＄{seller}</strong><br>${seller}<br><br><strong style="color:blue;">販売者のストアリンク ＄{sellerurl}</strong><br>${sellerurl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">現バージョン評価 ＄{curuserrating}</strong><br>${curuserrating}<br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curuserratingcnt}</strong><br>${curuserratingcnt}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">稼働条件 ＄{moveos}</strong><br>${moveos}<br><br><strong style="color:blue;">メインOS ＄{os}</strong><br>${os}<br><br><strong style="color:blue;">ゲームセンター対応 ＄{gamecenter}</strong><br>${gamecenter}<br><br><strong style="color:blue;">ユニバーサル対応 ＄{univ}</strong><br>${univ}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}<br><br><strong style="color:blue;">Univスクリーンショット1 ＄{univimage1}</strong><br>${univimage1}<br><br><strong style="color:blue;">Univスクリーンショット2 ＄{univimage2}</strong><br>${univimage2}<br><br><strong style="color:blue;">Univスクリーンショット3 ＄{univimage3}</strong><br>${univimage3}<br><br><strong style="color:blue;">Univスクリーンショット4 ＄{univimage4}</strong><br>${univimage4}<br><br><strong style="color:blue;">Univスクリーンショット5 ＄{univimage5}</strong><br>${univimage5}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
-	}
+    if (ent == "iPhone" || ent == "iPad") {
+        if (temp == "小さいボタン")
+            def_temp = '${badgeS}';
+        if (temp == "大きいボタン")
+            def_temp = '${badgeL}';
+        if (temp == "テキストのみ")
+            def_temp = '${textonly}';
+        if (temp == "アイコン付き")
+            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg"></div>';
+        if (temp == "予約語一覧")
+            def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">販売者名 ＄{seller}</strong><br>${seller}<br><br><strong style="color:blue;">販売者のストアリンク ＄{sellerurl}</strong><br>${sellerurl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">現バージョン評価 ＄{curuserrating}</strong><br>${curuserrating}<br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curuserratingcnt}</strong><br>${curuserratingcnt}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">稼働条件 ＄{moveos}</strong><br>${moveos}<br><br><strong style="color:blue;">メインOS ＄{os}</strong><br>${os}<br><br><strong style="color:blue;">ゲームセンター対応 ＄{gamecenter}</strong><br>${gamecenter}<br><br><strong style="color:blue;">ユニバーサル対応 ＄{univ}</strong><br>${univ}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}<br><br><strong style="color:blue;">Univスクリーンショット1 ＄{univimage1}</strong><br>${univimage1}<br><br><strong style="color:blue;">Univスクリーンショット2 ＄{univimage2}</strong><br>${univimage2}<br><br><strong style="color:blue;">Univスクリーンショット3 ＄{univimage3}</strong><br>${univimage3}<br><br><strong style="color:blue;">Univスクリーンショット4 ＄{univimage4}</strong><br>${univimage4}<br><br><strong style="color:blue;">Univスクリーンショット5 ＄{univimage5}</strong><br>${univimage5}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
+    }
 
 //Mac Template
-	if(ent == "Mac"){
-		if(temp == "小さいボタン")
-			def_temp = '${badgeS}';
-		if(temp == "大きいボタン")
-			def_temp = '${badgeL}';
-		if(temp == "テキストのみ")
-			def_temp = '${textonly}';
-		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg"></div>';
-		if(temp == "予約語一覧")
-			def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">販売者名 ＄{seller}</strong><br>${seller}<br><br><strong style="color:blue;">販売者のストアリンク ＄{sellerurl}</strong><br>${sellerurl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">現バージョン評価 ＄{curuserrating}</strong><br>${curuserrating}<br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curuserratingcnt}</strong><br>${curuserratingcnt}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
-	}
+    if (ent == "Mac") {
+        if (temp == "小さいボタン")
+            def_temp = '${badgeS}';
+        if (temp == "大きいボタン")
+            def_temp = '${badgeL}';
+        if (temp == "テキストのみ")
+            def_temp = '${textonly}';
+        if (temp == "アイコン付き")
+            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg"></div>';
+        if (temp == "予約語一覧")
+            def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">販売者名 ＄{seller}</strong><br>${seller}<br><br><strong style="color:blue;">販売者のストアリンク ＄{sellerurl}</strong><br>${sellerurl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">現バージョン評価 ＄{curuserrating}</strong><br>${curuserrating}<br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curuserratingcnt}</strong><br>${curuserratingcnt}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
+    }
 
 //Song and Album Template
-	if(ent == "Song" || ent =="Album"){
-		if(temp == "小さいボタン")
-			def_temp = '${badgeS}';
-		if(temp == "大きいボタン")
-			def_temp = '${badgeL}';
-		if(temp == "テキストのみ")
-			def_temp = '${textonly}';
-		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
-	}
-	if(ent == "Song" && temp =="予約語一覧")
-			def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">試聴URL ＄{preview}</strong><br>${preview}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">曲数 ＄{trackcnt}</strong><br>${trackcnt}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
-	if(ent == "Album" && temp =="予約語一覧")
-			def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">曲数 ＄{trackcnt}</strong><br>${trackcnt}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">著作権表示 ＄{copyr}</strong><br>${copyr}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
+    if (ent == "Song" || ent == "Album") {
+        if (temp == "小さいボタン")
+            def_temp = '${badgeS}';
+        if (temp == "大きいボタン")
+            def_temp = '${badgeL}';
+        if (temp == "テキストのみ")
+            def_temp = '${textonly}';
+        if (temp == "アイコン付き")
+            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
+    }
+    if (ent == "Song" && temp == "予約語一覧")
+        def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">試聴URL ＄{preview}</strong><br>${preview}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">曲数 ＄{trackcnt}</strong><br>${trackcnt}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
+    if (ent == "Album" && temp == "予約語一覧")
+        def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">曲数 ＄{trackcnt}</strong><br>${trackcnt}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">著作権表示 ＄{copyr}</strong><br>${copyr}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
 
 //Movie Template
-	if(ent == "Movie"){
-		if(temp == "小さいボタン")
-			def_temp = '${badgeS}';
-		if(temp == "大きいボタン")
-			def_temp = '${badgeL}';
-		if(temp == "テキストのみ")
-			def_temp = '${textonly}';
-		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
-		if(temp == "予約語一覧") 
-			def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">試聴URL ＄{preview}</strong><br>${preview}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">再生時間（分） ＄{playtime}</strong><br>${playtime}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">映画概要紹介（簡略版） ＄{shortdesc}</strong><br>${shortdesc}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
-	}
+    if (ent == "Movie") {
+        if (temp == "小さいボタン")
+            def_temp = '${badgeS}';
+        if (temp == "大きいボタン")
+            def_temp = '${badgeL}';
+        if (temp == "テキストのみ")
+            def_temp = '${textonly}';
+        if (temp == "アイコン付き")
+            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
+        if (temp == "予約語一覧") 
+            def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">試聴URL ＄{preview}</strong><br>${preview}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">再生時間（分） ＄{playtime}</strong><br>${playtime}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">映画概要紹介（簡略版） ＄{shortdesc}</strong><br>${shortdesc}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
+    }
 //eBook
-	if(ent == "eBook"){
-		if(temp == "小さいボタン")
-			def_temp = '${badgeS}';
-		if(temp == "大きいボタン")
-			def_temp = '${badgeL}';
-		if(temp == "テキストのみ")
-			def_temp = '${textonly}';
-		if(temp == "アイコン付き")
-			def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg"></div>';
-		if(temp == "予約語一覧") 
-			def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
-			}
-	// 選択された書式テンプレートをソース表示
-	d.getElementById("code").value = def_temp;
+    if (ent == "eBook") {
+        if (temp == "小さいボタン")
+            def_temp = '${badgeS}';
+        if (temp == "大きいボタン")
+            def_temp = '${badgeL}';
+        if (temp == "テキストのみ")
+            def_temp = '${textonly}';
+        if (temp == "アイコン付き")
+            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg"></div>';
+        if (temp == "予約語一覧") 
+            def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
+        }
+    // 選択された書式テンプレートをソース表示
+    d.getElementById("code").value = def_temp;
 }
 
-var entity = new Array("iPhone","iPad","Mac","Song","Album","Movie","eBook");
+var entity = new Array("iPhone", "iPad", "Mac", "Song", "Album", "Movie", "eBook");
 
 var template = new Array();
-template["iPhone"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
-template["iPad"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
-template["Mac"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
-template["Song"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
-template["Album"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
-template["Movie"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
-template["eBook"] = new Array("小さいボタン","大きいボタン","テキストのみ","アイコン付き","予約語一覧");
+template["iPhone"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
+template["iPad"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
+template["Mac"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
+template["Song"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
+template["Album"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
+template["Movie"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
+template["eBook"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
 
 createSelection(form1.elements['sel_entity'], "（検索対象）", entity, entity);
 
-function addSelOption( selObj, myValue, myText ){
-	selObj.length++;
-	selObj.options[ selObj.length - 1].value = myValue ;
-	selObj.options[ selObj.length - 1].text  = myText;
+function addSelOption(elObj, myValue, myText) {
+    selObj.length++;
+    selObj.options[selObj.length - 1].value = myValue ;
+    selObj.options[selObj.length - 1].text  = myText;
 }
 
-function createSelection( selObj, headings, aryValue, aryText ){
-	selObj.length = 0;
-	addSelOption( selObj, headings, headings);
-	for( var i=0; i < aryValue.length; i++){
-		addSelOption ( selObj , aryValue[i], aryText[i]);
-	}
+function createSelection(selObj, headings, aryValue, aryText) {
+    selObj.length = 0;
+    addSelOption(selObj, headings, headings);
+    for (var i=0; i < aryValue.length; i++) {
+        addSelOption(selObj, aryValue[i], aryText[i]);
+    }
 }
 
-function SelectEntity(obj){
-	createSelection(form1.elements['sel_template'], "（書式テンプレート）", template[obj.value], template[obj.value]);
-	var d = document;
-	if (obj.value == 'iPhone')
+function SelectEntity(obj) {
+    createSelection(form1.elements['sel_template'], "（書式テンプレート）",
+            template[obj.value], template[obj.value]);
+    var d = document;
+    if (obj.value == 'iPhone')
         d.getElementById("knd").value = "software",
         d.getElementById("bmn").value = "AppHtml(iPhone)",
         d.getElementById("scs").value = "288",
         d.getElementById("ipd").value = "1.5",
-        d.form1.scs.disabled=false,d.form1.ipd.disabled=false;
-	if (obj.value == 'iPad')
+        d.form1.scs.disabled = false,
+        d.form1.ipd.disabled = false;
+    if (obj.value == 'iPad')
         d.getElementById("knd").value = "iPadSoftware",
         d.getElementById("bmn").value = "AppHtml(iPad)",
         d.getElementById("scs").value = "432",
         d.getElementById("ipd").value = "0.67",
-        d.form1.scs.disabled=false,d.form1.ipd.disabled=false;
-	if (obj.value == 'Mac')
+        d.form1.scs.disabled = false,
+        d.form1.ipd.disabled = false;
+    if (obj.value == 'Mac')
         d.getElementById("knd").value = "macSoftware",
         d.getElementById("bmn").value = "AppHtml(Mac)",
         d.getElementById("scs").value = "480",
         d.getElementById("ipd").value = "0",
-        d.form1.scs.disabled=false,d.form1.ipd.disabled=false;
-	if (obj.value == 'Song')
+        d.form1.scs.disabled = false,
+        d.form1.ipd.disabled = false;
+    if (obj.value == 'Song')
         d.getElementById("knd").value = "song",
         d.getElementById("bmn").value = "MusicHtml(Song)",
         d.getElementById("scs").value = "0",
         d.getElementById("ipd").value = "0",
-        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
-	if (obj.value == 'Album')
+        d.form1.scs.disabled = true,
+        d.form1.ipd.disabled = true;
+    if (obj.value == 'Album')
         d.getElementById("knd").value = "album",
         d.getElementById("bmn").value = "MusicHtml(Album)",
         d.getElementById("scs").value = "0",
         d.getElementById("ipd").value = "0",
-        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
-	if (obj.value == 'Movie')
+        d.form1.scs.disabled = true,
+        d.form1.ipd.disabled = true;
+    if (obj.value == 'Movie')
         d.getElementById("knd").value = "movie",
         d.getElementById("bmn").value = "MovieHtml",
         d.getElementById("scs").value = "0",
         d.getElementById("ipd").value = "0",
-        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
-	if (obj.value == 'eBook')
+        d.form1.scs.disabled = true,
+        d.form1.ipd.disabled = true;
+    if (obj.value == 'eBook')
         d.getElementById("knd").value = "ebook",
         d.getElementById("bmn").value = "iBooksHtml",
         d.getElementById("scs").value = "0",
         d.getElementById("ipd").value = "0",
-        d.form1.scs.disabled=true,d.form1.ipd.disabled=true;
-	//d.getElementById("knd").value = obj.value;
+        d.form1.scs.disabled = true,
+        d.form1.ipd.disabled = true;
 }
 
 //-->
