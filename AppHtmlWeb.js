@@ -360,7 +360,7 @@ new Placeholder('アーティストURL',           '${artisturl}',        allEnt
 new Placeholder('販売元',                    '${seller}',           appEntity),
 new Placeholder('販売元サイトURL',           '${sellerurl}',        appEntity),
 new Placeholder('コピーライト',              '${copyr}',            {album:""}),
-new Placeholder('説明',                      '${desc}',             appAndEbookEntity),
+new Placeholder('説明',                      '${desc}',             {software:"", iPadSoftware:"", macSoftware:"", movie:"", ebook:""}),
 new Placeholder('What\'s New',               '${descnew}',          appEntity),
 new Placeholder('短い説明',                  '${shortdesc}',        {movie:""}),
 new Placeholder('バージョン',                '${version}',          appEntity),
