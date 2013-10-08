@@ -118,9 +118,6 @@ GameCenter対応            | ${gamecenter}       | iPhone/iPadアプリ
 スクリーンショット(univ)4 | ${univimage4}       | iPhone/iPadアプリ
 スクリーンショット(univ)5 | ${univimage5}       | iPhone/iPadアプリ
 
-既知の問題
-----------
-リリース時点において Mac App のキーワードによる検索ができません。これを回避するためには Mac App Store で対象アプリを検索して「リンクをコピー」したURLをブラウザで開き AppHtml ブックマークレットを実行してください。
 
 免責事項
 --------------------------------
