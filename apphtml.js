@@ -83,7 +83,7 @@
         var s = d.createElement("script"),
             src = "";
         if (appId != "") src = "http://itunes.apple.com/jp/lookup?id=" + appId + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt;
-        if (src == "") src = "http://itunes.apple.com/jp/search?term=" + encodeURIComponent(kwd) + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt;
+        if (src == "") src = "http://itunes.apple.com/jp/search?term=" + encodeURIComponent(kwd) + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt + "&attribute=allTrackTerm";
 
         /*********** iTunes Search APIの戻り値（ここから）***********
         'kind', 'artistId', 'artistName', 'price', 'version', 'description', 'releaseDate',
