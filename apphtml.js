@@ -82,8 +82,18 @@
     function getWebApi() {
         var s = d.createElement("script"),
             src = "";
-        if (appId != "") src = "http://itunes.apple.com/jp/lookup?id=" + appId + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt;
-        if (src == "") src = "http://itunes.apple.com/jp/search?term=" + encodeURIComponent(kwd) + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt;
+        if (appId != "") {
+            // iTunes Web の場合
+            src = "http://itunes.apple.com/jp/lookup?id=" + appId + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt;
+        } else {
+            src = "http://itunes.apple.com/jp/search?term=" + encodeURIComponent(kwd) + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt;
+            // 検索対象が Mac App の場合に
+            // Search API の不具合を回避する暫定措置として
+            // attribute パラメーターを追加（ただし開発者名での検索不可）
+            if (knd == "macSoftware") {
+                src += "&attribute=allTrackTerm";
+            }
+        }
 
         /*********** iTunes Search APIの戻り値（ここから）***********
         'kind', 'artistId', 'artistName', 'price', 'version', 'description', 'releaseDate',
