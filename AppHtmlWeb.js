@@ -32,8 +32,6 @@ function loadConfig() {
   var conf_aff = storage.get("apphtml_conf_aff");
   var conf_count = storage.get("apphtml_conf_count");
   if (conf_count == "") conf_count = 8;
-  var conf_out = storage.get("apphtml_conf_out");
-  if (conf_out == "") conf_out = "popup";
   var conf_iphone_scs = storage.get("apphtml_conf_iphone_scs");
   if (conf_iphone_scs == "") conf_iphone_scs = 288;
   var conf_iphone_ipd = storage.get("apphtml_conf_iphone_ipd");
@@ -49,7 +47,6 @@ function loadConfig() {
 
   $("#conf_aff").val(conf_aff);
   $("#conf_count").val(conf_count);
-  $("#conf_out").find("option[value="+conf_out+"]").attr("selected", true);
   $("#conf_iphone_scs").val(conf_iphone_scs);
   $("#conf_iphone_ipd").val(conf_iphone_ipd);
   $("#conf_ipad_scs").val(conf_ipad_scs);
@@ -62,6 +59,9 @@ function reloadConfig() {
   loadConfig();
   conf_template = storage.get("apphtml_conf_template");
   if (conf_template == "") conf_template = preset();
+
+  setOutSelection();
+  $("#conf_out").selectmenu("refresh");
 }
 
 function saveConfig() {
@@ -75,7 +75,9 @@ function saveConfig() {
   storage.set("apphtml_conf_mac_scs", $("#conf_mac_scs").val());
   storage.set("apphtml_conf_mac_ipd", $("#conf_mac_ipd").val());
   storage.set("apphtml_conf_template", conf_template);
+
   setTemplateSelection();
+  $("#template").selectmenu("refresh");
 
   return true;
 };
@@ -240,6 +242,39 @@ function getIpd(kind) {
 ////////////////////////////////////////////////////////////////////////////////
 // 設定画面
 
+var outParams = {
+  "ポップアップ": "popup",
+  "ポップアップ→Textforce": "pop-textforce",
+  "Textforce": "textforce",
+  "Textforce→Safari": "safari-textforce",
+  "DraftPad": "draftpad",
+  "するぷろ": "slpro",
+  "Moblogger": "moblogger",
+  "Moblogger(追記)": "moblogger-app",
+  "Moblogger(コピー)": "moblogger-pb",
+  "MyEditor": "myeditor",
+  "MyEditor(カーソル)": "myeditor-cursor",
+  "Rowline": "rowline",
+  "TextHandler": "msth",
+  "ThumbEdit(送信)": "thumbedit",
+  "ThumbEdit(追記)": "thumbedit-insert",
+  "PressSync Pro": "presssync",
+  "Textwell": "textwell",
+  "はてなブログ（新規投稿）": "hatenablog",
+  "Drafts": "drafts"
+};
+
+function setOutSelection() {
+  var conf_out = storage.get("apphtml_conf_out");
+  if (conf_out == "") conf_out = "popup";
+  var $conf_out = $("#conf_out");
+  $conf_out.empty();
+  for (var label in outParams) {
+    $conf_out.append($("<option>").text(label).val(outParams[label]));
+  }
+  $conf_out.find("option[value="+conf_out+"]").attr("selected", true);
+}
+
 function showTemplateList(title, option) {
   if (!option) {
     option = {};
@@ -276,6 +311,9 @@ function showTemplateEditor(index) {
 
     $("#template-editor-name").val(selectedTemplate.name);
     $("#template-editor-content").val(selectedTemplate.content);
+  } else {
+    $("#template-editor-name").val("");
+    $("#template-editor-content").val("");
   }
 
   var $placeholderList = $("#placeholder-list");
@@ -421,6 +459,7 @@ $(document).on("pagebeforecreate", "#main", function() {
   if (conf_template == "") conf_template = preset();
 
   setKindSelection();
+  setOutSelection();
   setTemplateSelection();
 });
 
