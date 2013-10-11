@@ -13,6 +13,7 @@ a{text-decoration:none;color:#3333FF}
 textarea{width:50%;height:100px;padding:2px}
 h2{margin:0px}
 h4{margin-bottom:0px;line-height:20px}
+ul{padding-left:25px}
 
 @media screen and (max-device-width: 640px) {
 textarea{width:100%;color:#3333FF}
@@ -23,12 +24,12 @@ textarea{width:100%;color:#3333FF}
 </head> 
 <body> 
 <div id="inputHtml"></div>
-<h2>Apphtmlブックマークレット・メーカー</h2>
-<span style="font-style:italic;font-size:12px">Last updated: October 4, 2013</span>
+<h2>AppHtmlブックマークレット・メーカー</h2>
+<span style="font-style:italic;font-size:12px">Last updated: October 12, 2013</span>
 <ul>
 <li>iTunes Store、App Store、iBookstore、および Mac App Store 上のコンテンツへのリンク作成ツールです。</li>
 <li>iTunesアフィリエイトプログラムのPHG対応リンクを作成することが可能です。</li>
-<li>iTunesアフィリエイトプログラムへの申込は<a href="http://www.apple.com/jp/itunes/affiliates/" target="blank">こちらから</a>。</li>
+<li>AppHtmlの基本的な概要は<a href="https://github.com/connect1ngdots/AppHtml" target="blank">こちらへ</a>。</li>
 </ul>
 <form>
 <input type="button" value="設定を保存" id="buttonSave" onclick="javascript:save_config();"> 
@@ -82,11 +83,13 @@ textarea{width:100%;color:#3333FF}
 <input type="hidden" id="out" value="preview">
 <input type="hidden" id="cnt" value="8">
 
-<h4>スクリーンショット長辺ピクセルとユニバーサルのスクリーンショット拡大率を入力して下さい</h4>
-<input type="text" size="30" id="scs" value=0 onChange="javascript:bmClear();" disabled><input type="text" size="30" id="ipd" value=0 onchange="javascript:bmClear();" disabled>
+<h4>スクリーンショット画像長辺ピクセルとユニバーサルアプリの拡大率</h4>
+<input type="text" style="text-align:right;" size="10" id="scs" value=0 onChange="javascript:bmClear();" disabled>px <input type="text" style="text-align:right;" size="10" id="ipd" value=0 onchange="javascript:bmClear();" disabled>％<br>
+<span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
 
-<h4>PHGアフィリエイト（オプション）</h4>
-ID <input type="text" size="20" id="phg" value="" onchange="javascript:bmClear();">
+<h4>PHGアフィリエイトID（トークン）</h4>
+<input type="text" size="20" id="phg" value="" onchange="javascript:bmClear();"><br>
+<span style="font-size:12px">アフィリエイトリンクを生成する場合に指定してください</span>
 <!-- キャンペーン・テキスト <input type="text" size="20" id="ct" value="" onchange="javascript:bmClear();"> -->
 <h4>テンプレートを直接カスタマイズできます（但し ' は禁止文字）</h4>
 <textarea id="code" onchange="javascript:bmClear();"></textarea><p>
