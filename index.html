@@ -54,8 +54,10 @@ a:link.sig {
   </div>
   <div data-role="content">
     <div data-role="fieldcontain">
-      <label for="conf_aff">アフィリエイトID(オプション)</label>
+      <label for="conf_aff">アフィリエイトID(トークン)</label>
       <input type="text" id="conf_aff" /><br>
+      <span style="font-size:12px">アフィリエイトリンクを生成する場合に指定してください</span><br>
+      <br>
 
       <label for="conf_count">結果の最大件数</label>
       <input type="number" id="conf_count" /><br>
@@ -98,24 +100,25 @@ a:link.sig {
       <label>その他</label>
       <div data-role="collapsible">
         <h3>iPhone App</h3>
-        <label for="conf_iphone_scs">スクショの長辺ピクセル</label>
-        <input type="number" id="conf_iphone_scs" />
-        <label for="conf_iphone_ipd">ユニバーサルのスクショ拡大率</label>
-        <input type="number" id="conf_iphone_ipd" />
+        <label for="conf_iphone_scs">スクリーンショット画像長辺ピクセル</label>
+        <input type="number" id="conf_iphone_scs" /><br>
+        <label for="conf_iphone_ipd">ユニバーサルアプリの拡大率(%)</label>
+        <input type="number" id="conf_iphone_ipd" /><br>
+        <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
       </div>
       <div data-role="collapsible">
         <h3>iPad App</h3>
-        <label for="conf_ipad_scs">スクショの長辺ピクセル</label>
+        <label for="conf_ipad_scs">スクリーンショット画像長辺ピクセル</label>
         <input type="number" id="conf_ipad_scs" />
-        <label for="conf_ipad_ipd">ユニバーサルのスクショ拡大率</label>
-        <input type="number" id="conf_ipad_ipd" />
+        <label for="conf_ipad_ipd">ユニバーサルアプリの拡大率(%)</label>
+        <input type="number" id="conf_ipad_ipd" /><br>
+        <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
       </div>
       <div data-role="collapsible">
         <h3>Mac App</h3>
-        <label for="conf_mac_scs">スクショの長辺ピクセル</label>
-        <input type="number" id="conf_mac_scs" />
-        <label for="conf_mac_ipd">ユニバーサルのスクショ拡大率</label>
-        <input type="number" id="conf_mac_ipd" />
+        <label for="conf_mac_scs">スクリーンショット画像長辺ピクセル</label>
+        <input type="number" id="conf_mac_scs" /><br>
+        <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
       </div>
     </div>
   </div>

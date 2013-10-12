@@ -44,8 +44,6 @@ function loadConfig() {
   if (conf_ipad_ipd == "") conf_ipad_ipd = 0.67;
   var conf_mac_scs = storage.get("apphtml_conf_mac_scs");
   if (conf_mac_scs == "") conf_mac_scs = 480;
-  var conf_mac_ipd = storage.get("apphtml_conf_mac_ipd");
-  if (conf_mac_ipd == "") conf_mac_ipd = 0;
 
   $("#conf_aff").val(conf_aff);
   $("#conf_count").val(conf_count);
@@ -55,7 +53,6 @@ function loadConfig() {
   $("#conf_ipad_scs").val(conf_ipad_scs);
   $("#conf_ipad_ipd").val(conf_ipad_ipd);
   $("#conf_mac_scs").val(conf_mac_scs);
-  $("#conf_mac_ipd").val(conf_mac_ipd);
 };
 
 function reloadConfig() {
@@ -73,7 +70,6 @@ function saveConfig() {
   storage.set("apphtml_conf_ipad_scs", $("#conf_ipad_scs").val());
   storage.set("apphtml_conf_ipad_ipd", $("#conf_ipad_ipd").val());
   storage.set("apphtml_conf_mac_scs", $("#conf_mac_scs").val());
-  storage.set("apphtml_conf_mac_ipd", $("#conf_mac_ipd").val());
   storage.set("apphtml_conf_template", conf_template);
   setTemplateSelection();
 
@@ -233,7 +229,7 @@ function getIpd(kind) {
   case 'iPadSoftware':
     return $("#conf_ipad_ipd").val();
   case 'macSoftware':
-    return $("#conf_mac_ipd").val();
+    return 0;
   }
 }
 
