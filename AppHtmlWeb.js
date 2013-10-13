@@ -42,8 +42,6 @@ function loadConfig() {
   if (conf_ipad_ipd == "") conf_ipad_ipd = 0.67;
   var conf_mac_scs = storage.get("apphtml_conf_mac_scs");
   if (conf_mac_scs == "") conf_mac_scs = 480;
-  var conf_mac_ipd = storage.get("apphtml_conf_mac_ipd");
-  if (conf_mac_ipd == "") conf_mac_ipd = 0;
 
   $("#conf_aff").val(conf_aff);
   $("#conf_count").val(conf_count);
@@ -52,7 +50,6 @@ function loadConfig() {
   $("#conf_ipad_scs").val(conf_ipad_scs);
   $("#conf_ipad_ipd").val(conf_ipad_ipd);
   $("#conf_mac_scs").val(conf_mac_scs);
-  $("#conf_mac_ipd").val(conf_mac_ipd);
 };
 
 function reloadConfig() {
@@ -73,7 +70,6 @@ function saveConfig() {
   storage.set("apphtml_conf_ipad_scs", $("#conf_ipad_scs").val());
   storage.set("apphtml_conf_ipad_ipd", $("#conf_ipad_ipd").val());
   storage.set("apphtml_conf_mac_scs", $("#conf_mac_scs").val());
-  storage.set("apphtml_conf_mac_ipd", $("#conf_mac_ipd").val());
   storage.set("apphtml_conf_template", conf_template);
 
   setTemplateSelection();
@@ -96,7 +92,9 @@ function defaultTemplate() {
   return [
     new Template('小さいボタン', '${badgeS}'),
     new Template('大きいボタン', '${badgeL}'),
-    new Template('テキストのみ', '${textonly}')
+    new Template('テキストのみ', '${textonly}'),
+    new Template('アイコン付き(小)', '<span class="appIcon"><img class="appIconImg" height="60" src="${icon60url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeS" style="display:inline-block; margin:6px">${badgeS}</span><br style="clear:both;">'),
+    new Template('アイコン付き(大)', '<span class="appIcon"><img class="appIconImg" height="100" src="${icon100url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeL" style="display:inline-block; margin:4px">${badgeL}</span><br style="clear:both;">')
   ];
 };
 
@@ -235,7 +233,7 @@ function getIpd(kind) {
   case 'iPadSoftware':
     return $("#conf_ipad_ipd").val();
   case 'macSoftware':
-    return $("#conf_mac_ipd").val();
+    return 0;
   }
 }
 
