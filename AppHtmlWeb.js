@@ -90,7 +90,9 @@ function defaultTemplate() {
   return [
     new Template('小さいボタン', '${badgeS}'),
     new Template('大きいボタン', '${badgeL}'),
-    new Template('テキストのみ', '${textonly}')
+    new Template('テキストのみ', '${textonly}'),
+    new Template('アイコン付き(小)', '<span class="appIcon"><img class="appIconImg" height="60" src="${icon60url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeS" style="display:inline-block; margin:6px">${badgeS}</span><br style="clear:both;">'),
+    new Template('アイコン付き(大)', '<span class="appIcon"><img class="appIconImg" height="100" src="${icon100url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeL" style="display:inline-block; margin:4px">${badgeL}</span><br style="clear:both;">')
   ];
 };
 
