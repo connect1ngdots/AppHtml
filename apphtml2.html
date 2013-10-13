@@ -13,6 +13,7 @@ a{text-decoration:none;color:#3333FF}
 textarea{width:50%;height:100px;padding:2px}
 h2{margin:0px}
 h4{margin-bottom:0px;line-height:20px}
+ul{padding-left:25px}
 
 @media screen and (max-device-width: 640px) {
 textarea{width:100%;color:#3333FF}
@@ -23,12 +24,12 @@ textarea{width:100%;color:#3333FF}
 </head> 
 <body> 
 <div id="inputHtml"></div>
-<h2>Apphtmlブックマークレット・メーカー</h2>
-<span style="font-style:italic;font-size:12px">Last updated: October 4, 2013</span>
+<h2>AppHtmlブックマークレット・メーカー</h2>
+<span style="font-style:italic;font-size:12px">Last updated: October 12, 2013</span>
 <ul>
 <li>iTunes Store、App Store、iBookstore、および Mac App Store 上のコンテンツへのリンク作成ツールです。</li>
 <li>iTunesアフィリエイトプログラムのPHG対応リンクを作成することが可能です。</li>
-<li>iTunesアフィリエイトプログラムへの申込は<a href="http://www.apple.com/jp/itunes/affiliates/" target="blank">こちらから</a>。</li>
+<li>AppHtmlの基本的な概要は<a href="https://github.com/connect1ngdots/AppHtml" target="blank">こちらへ</a>。</li>
 </ul>
 <form>
 <input type="button" value="設定を保存" id="buttonSave" onclick="javascript:save_config();"> 
@@ -82,11 +83,13 @@ textarea{width:100%;color:#3333FF}
 <input type="hidden" id="out" value="preview">
 <input type="hidden" id="cnt" value="8">
 
-<h4>スクリーンショット長辺ピクセルとユニバーサルのスクリーンショット拡大率を入力して下さい</h4>
-<input type="text" size="30" id="scs" value=0 onChange="javascript:bmClear();" disabled><input type="text" size="30" id="ipd" value=0 onchange="javascript:bmClear();" disabled>
+<h4>スクリーンショット画像長辺ピクセルとユニバーサルアプリの拡大率</h4>
+<input type="text" style="text-align:right;" size="10" id="scs" value=0 onChange="javascript:bmClear();" disabled>px <input type="text" style="text-align:right;" size="10" id="ipd" value=0 onchange="javascript:bmClear();" disabled>％<br>
+<span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
 
-<h4>PHGアフィリエイト（オプション）</h4>
-ID <input type="text" size="20" id="phg" value="" onchange="javascript:bmClear();">
+<h4>PHGアフィリエイトID（トークン）</h4>
+<input type="text" size="20" id="phg" value="" onchange="javascript:bmClear();"><br>
+<span style="font-size:12px">アフィリエイトリンクを生成する場合に指定してください</span>
 <!-- キャンペーン・テキスト <input type="text" size="20" id="ct" value="" onchange="javascript:bmClear();"> -->
 <h4>テンプレートを直接カスタマイズできます（但し ' は禁止文字）</h4>
 <textarea id="code" onchange="javascript:bmClear();"></textarea><p>
@@ -147,13 +150,11 @@ function load_config() {
 
 function save_config() {
     var now = new Date();
+    var dt = now.toLocaleTimeString();
     var y = now.getFullYear();
     var m = now.getMonth() + 1;
     var dd = now.getDate();
-    var h = now.getHours();
-    var mm = now.getMinutes();
-    var s = now.getSeconds();
-    saved_date = y+"/"+m+"/"+dd+"/ "+h+":"+mm+":"+s;
+    saved_date = y+"."+m+"."+dd+" "+dt;
 
     storage.set("ithtml_knd", d.getElementById("knd").value);
     storage.set("ithtml_bmn", d.getElementById("bmn").value);
@@ -254,8 +255,10 @@ function loadFmt() {
             def_temp = '${badgeL}';
         if (temp == "テキストのみ")
             def_temp = '${textonly}';
-        if (temp == "アイコン付き")
-            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_appstore-lrg.svg"></div>';
+        if (temp == "アイコン付き（小）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="60" src="${icon60url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeS" style="display:inline-block; margin:6px">${badgeS}</span><br style="clear:both;">';
+        if (temp == "アイコン付き（大）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="100" src="${icon100url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeL" style="display:inline-block; margin:4px">${badgeL}</span><br style="clear:both;">';
         if (temp == "予約語一覧")
             def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">販売者名 ＄{seller}</strong><br>${seller}<br><br><strong style="color:blue;">販売者のストアリンク ＄{sellerurl}</strong><br>${sellerurl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">現バージョン評価 ＄{curuserrating}</strong><br>${curuserrating}<br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curuserratingcnt}</strong><br>${curuserratingcnt}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">稼働条件 ＄{moveos}</strong><br>${moveos}<br><br><strong style="color:blue;">メインOS ＄{os}</strong><br>${os}<br><br><strong style="color:blue;">ゲームセンター対応 ＄{gamecenter}</strong><br>${gamecenter}<br><br><strong style="color:blue;">ユニバーサル対応 ＄{univ}</strong><br>${univ}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}<br><br><strong style="color:blue;">Univスクリーンショット1 ＄{univimage1}</strong><br>${univimage1}<br><br><strong style="color:blue;">Univスクリーンショット2 ＄{univimage2}</strong><br>${univimage2}<br><br><strong style="color:blue;">Univスクリーンショット3 ＄{univimage3}</strong><br>${univimage3}<br><br><strong style="color:blue;">Univスクリーンショット4 ＄{univimage4}</strong><br>${univimage4}<br><br><strong style="color:blue;">Univスクリーンショット5 ＄{univimage5}</strong><br>${univimage5}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
     }
@@ -268,8 +271,10 @@ function loadFmt() {
             def_temp = '${badgeL}';
         if (temp == "テキストのみ")
             def_temp = '${textonly}';
-        if (temp == "アイコン付き")
-            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_macappstore-lrg.svg"></div>';
+        if (temp == "アイコン付き（小）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="60" src="${icon60url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeS" style="display:inline-block; margin:6px">${badgeS}</span><br style="clear:both;">';
+        if (temp == "アイコン付き（大）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="100" src="${icon100url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeL" style="display:inline-block; margin:4px">${badgeL}</span><br style="clear:both;">';
         if (temp == "予約語一覧")
             def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">販売者名 ＄{seller}</strong><br>${seller}<br><br><strong style="color:blue;">販売者のストアリンク ＄{sellerurl}</strong><br>${sellerurl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">新機能説明 ＄{descnew}</strong><br>${descnew}<br><br><strong style="color:blue;">バージョン ＄{version}</strong><br>${version}<br><br><strong style="color:blue;">レーティング ＄{rating}</strong><br>${rating}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">現バージョン評価 ＄{curuserrating}</strong><br>${curuserrating}<br><br><strong style="color:blue;">現バージョンレビュー数 ＄{curuserratingcnt}</strong><br>${curuserratingcnt}<br><br><strong style="color:blue;">サイズ ＄{appsize}</strong><br>${appsize}<br><br><strong style="color:blue;">言語 ＄{lang}</strong><br>${lang}<br><br><strong style="color:blue;">スクリーンショット1 ＄{image1}</strong><br>${image1}<br><br><strong style="color:blue;">スクリーンショット2 ＄{image2}</strong><br>${image2}<br><br><strong style="color:blue;">スクリーンショット3 ＄{image3}</strong><br>${image3}<br><br><strong style="color:blue;">スクリーンショット4 ＄{image4}</strong><br>${image4}<br><br><strong style="color:blue;">スクリーンショット5 ＄{image5}</strong><br>${image5}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
     }
@@ -282,8 +287,10 @@ function loadFmt() {
             def_temp = '${badgeL}';
         if (temp == "テキストのみ")
             def_temp = '${textonly}';
-        if (temp == "アイコン付き")
-            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
+        if (temp == "アイコン付き（小）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="60" src="${icon60url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeS" style="display:inline-block; margin:6px">${badgeS}</span><br style="clear:both;">';
+        if (temp == "アイコン付き（大）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="100" src="${icon100url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeL" style="display:inline-block; margin:4px">${badgeL}</span><br style="clear:both;">';
     }
     if (ent == "Song" && temp == "予約語一覧")
         def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">試聴URL ＄{preview}</strong><br>${preview}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">曲数 ＄{trackcnt}</strong><br>${trackcnt}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
@@ -298,8 +305,10 @@ function loadFmt() {
             def_temp = '${badgeL}';
         if (temp == "テキストのみ")
             def_temp = '${textonly}';
-        if (temp == "アイコン付き")
-            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_itunes-lrg.svg"></div>';
+        if (temp == "アイコン付き（小）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="60" src="${icon60url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeS" style="display:inline-block; margin:6px">${badgeS}</span><br style="clear:both;">';
+        if (temp == "アイコン付き（大）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="100" src="${icon100url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeL" style="display:inline-block; margin:4px">${badgeL}</span><br style="clear:both;">';
         if (temp == "予約語一覧") 
             def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">試聴URL ＄{preview}</strong><br>${preview}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">再生時間（分） ＄{playtime}</strong><br>${playtime}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">映画概要紹介（簡略版） ＄{shortdesc}</strong><br>${shortdesc}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
     }
@@ -311,8 +320,10 @@ function loadFmt() {
             def_temp = '${badgeL}';
         if (temp == "テキストのみ")
             def_temp = '${textonly}';
-        if (temp == "アイコン付き")
-            def_temp = '<div class="apphtml"><img class="apphtml_icon" width="100" src="${icon100url}"><br><span class="apphtml_name">${name} - ${artist}</span><br><img class="apphtml_badge" src="http://linkmaker.itunes.apple.com/htmlResources/assets/ja_jp//images/web/linkmaker/badge_bookstore-lrg.svg"></div>';
+        if (temp == "アイコン付き（小）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="60" src="${icon60url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeS" style="display:inline-block; margin:6px">${badgeS}</span><br style="clear:both;">';
+        if (temp == "アイコン付き（大）")
+            def_temp = '<span class="appIcon"><img class="appIconImg" height="100" src="${icon100url}" style="float:left;margin: 0px 15px 15px 5px;"></span><span class="appName"><strong><a href="${url}" target="itunes_store">${name}</a></strong></span><br><span class="appCategory">カテゴリ: ${category}</span><br><span class="badgeL" style="display:inline-block; margin:4px">${badgeL}</span><br style="clear:both;">';
         if (temp == "予約語一覧") 
             def_temp = '<strong style="color:blue;">アプリ・曲・映画・書籍名 ＄{name}</strong><br>${name}<br><br><strong style="color:blue;">アプリ・曲・映画・書籍URL ＄{url}</strong><br>${url}<br><br><strong style="color:blue;">価格 ＄{price}</strong><br>${price}<br><br><strong style="color:blue;">カテゴリ ＄{category}</strong><br>${category}<br><br><strong style="color:blue;">発売日 ＄{pubdate}</strong><br>${pubdate}<br><br><strong style="color:blue;">アイコンURL ＄{icon60url}</strong><br>${icon60url}<br><br><strong style="color:blue;">アイコンURL ＄{icon100url}</strong><br>${icon100url}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者名 ＄{artist}</strong><br>${artist}<br><br><strong style="color:blue;">開発者・アーティスト・監督・著者のストアリンク ＄{artisturl}</strong><br>${artisturl}<br><br><strong style="color:blue;">アプリ・映画書籍概要紹介 ＄{desc}</strong><br>${desc}<br><br><strong style="color:blue;">全バージョン評価 ＄{userrating}</strong><br>${userrating}<br><br><strong style="color:blue;">全バージョンレビュー数 ＄{userratingcnt}</strong><br>${userratingcnt}<br><br><strong style="color:blue;">大きいボタン ＄{badgeL}</strong><br>${badgeL}<br><br><strong style="color:blue;">小さいボタン ＄{badgeS}</strong><br>${badgeS}<br><br><strong style="color:blue;">テキストリンク ＄{textonly}</strong><br>${textonly}<br><br>';
         }
@@ -323,13 +334,13 @@ function loadFmt() {
 var entity = new Array("iPhone", "iPad", "Mac", "Song", "Album", "Movie", "eBook");
 
 var template = new Array();
-template["iPhone"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
-template["iPad"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
-template["Mac"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
-template["Song"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
-template["Album"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
-template["Movie"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
-template["eBook"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き", "予約語一覧");
+template["iPhone"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き（小）", "アイコン付き（大）", "予約語一覧");
+template["iPad"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き（小）", "アイコン付き（大）", "予約語一覧");
+template["Mac"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き（小）", "アイコン付き（大）", "予約語一覧");
+template["Song"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き（小）", "アイコン付き（大）", "予約語一覧");
+template["Album"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き（小）", "アイコン付き（大）", "予約語一覧");
+template["Movie"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き（小）", "アイコン付き（大）", "予約語一覧");
+template["eBook"] = new Array("小さいボタン", "大きいボタン", "テキストのみ", "アイコン付き（小）", "アイコン付き（大）", "予約語一覧");
 
 createSelection(form1.elements['sel_entity'], "（検索対象）", entity, entity);
 
