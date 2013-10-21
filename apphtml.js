@@ -474,15 +474,15 @@
             x.descnew = data.releaseNotes;
             x.version = data.version;
             x.rating = data.trackContentRating;
-            if ('' + data.averageUserRatingForCurrentVersion == 'null') x.curverrating = '無し';
-            else x.curverrating = data.averageUserRatingForCurrentVersion;
+            if (!data.averageUserRatingForCurrentVersion) x.curuserrating = '無し';
+            else x.curuserrating = data.averageUserRatingForCurrentVersion;
             if (!data.userRatingCountForCurrentVersion) {
                 x.curuserratingcnt = '0件の評価';
             } else {
                 x.curuserratingcnt = fmtNumber(data.userRatingCountForCurrentVersion) + '件の評価';
             }
             x.curuserratingcnt = x.curuserratingcnt.replace('n,ull', '0');
-            if ('' + data.averageUserRating == 'null') x.userrating = '無し';
+            if (!data.averageUserRating) x.userrating = '無し';
             else x.userrating = data.averageUserRating;
             if (!data.userRatingCount) {
                 x.userratingcnt = '0件の評価';
