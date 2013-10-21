@@ -378,8 +378,8 @@
         }
         if (knd == "album") {
             x.name = data.collectionCensoredName;
-            if(phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
-            else x.url = data.trackViewUrl;
+            if(phg != "") x.url = PHGUrl(data.collectionViewUrl, phg);
+            else x.url = data.collectionViewUrl;
             if (eval(data.collectionPrice) == 0) x.price = '無料';
             else x.price = '￥' + fmtNumber(data.collectionPrice);
             x.category = data.primaryGenreName;
@@ -402,13 +402,8 @@
             if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
             else x.url = data.trackViewUrl;
             x.preview = data.previewUrl;
-            if (!data.trackPrice) {
-                x.price = '';
-            } else if (eval(data.trackPrice) == 0) {
-                x.price = '無料';
-            } else {
-                x.price = '￥' + fmtNumber(data.trackPrice);
-            }
+            if (eval(data.trackPrice) == 0) x.price = '無料';
+            else x.price = '￥' + fmtNumber(data.trackPrice);
             x.category = data.primaryGenreName;
             if (!data.trackTimeMillis) x.playtime = 'データなし';
             else x.playtime = sizeTime(data.trackTimeMillis);
@@ -437,13 +432,8 @@
             x.name = data.trackCensoredName;
             if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
             else x.url = data.trackViewUrl;
-            if (!data.price) {
-                x.price = '';
-            } else if (eval(data.price) == 0) {
-                x.price = '無料';
-            } else {
-                x.price = '￥' + fmtNumber(data.price);
-            }
+            if (eval(data.price) == 0) x.price = '無料';
+            else x.price = '￥' + fmtNumber(data.price);
             x.category = data.genres[0];
             for (i = 1; i < data.genres.length; i++) x.category = x.category + '、 ' + data.genres[i];
             x.pubdate = data.releaseDate.replace(/-/g, '/');
@@ -484,15 +474,15 @@
             x.descnew = data.releaseNotes;
             x.version = data.version;
             x.rating = data.trackContentRating;
-            if ('' + data.averageUserRatingForCurrentVersion == 'null') x.curverrating = '無し';
-            else x.curverrating = data.averageUserRatingForCurrentVersion;
+            if (!data.averageUserRatingForCurrentVersion) x.curuserrating = '無し';
+            else x.curuserrating = data.averageUserRatingForCurrentVersion;
             if (!data.userRatingCountForCurrentVersion) {
                 x.curuserratingcnt = '0件の評価';
             } else {
                 x.curuserratingcnt = fmtNumber(data.userRatingCountForCurrentVersion) + '件の評価';
             }
             x.curuserratingcnt = x.curuserratingcnt.replace('n,ull', '0');
-            if ('' + data.averageUserRating == 'null') x.userrating = '無し';
+            if (!data.averageUserRating) x.userrating = '無し';
             else x.userrating = data.averageUserRating;
             if (!data.userRatingCount) {
                 x.userratingcnt = '0件の評価';
