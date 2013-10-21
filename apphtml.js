@@ -378,8 +378,8 @@
         }
         if (knd == "album") {
             x.name = data.collectionCensoredName;
-            if(phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
-            else x.url = data.trackViewUrl;
+            if(phg != "") x.url = PHGUrl(data.collectionViewUrl, phg);
+            else x.url = data.collectionViewUrl;
             if (eval(data.collectionPrice) == 0) x.price = '無料';
             else x.price = '￥' + fmtNumber(data.collectionPrice);
             x.category = data.primaryGenreName;
