@@ -402,13 +402,8 @@
             if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
             else x.url = data.trackViewUrl;
             x.preview = data.previewUrl;
-            if (!data.trackPrice) {
-                x.price = '';
-            } else if (eval(data.trackPrice) == 0) {
-                x.price = '無料';
-            } else {
-                x.price = '￥' + fmtNumber(data.trackPrice);
-            }
+            if (eval(data.trackPrice) == 0) x.price = '無料';
+            else x.price = '￥' + fmtNumber(data.trackPrice);
             x.category = data.primaryGenreName;
             if (!data.trackTimeMillis) x.playtime = 'データなし';
             else x.playtime = sizeTime(data.trackTimeMillis);
@@ -437,13 +432,8 @@
             x.name = data.trackCensoredName;
             if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
             else x.url = data.trackViewUrl;
-            if (!data.price) {
-                x.price = '';
-            } else if (eval(data.price) == 0) {
-                x.price = '無料';
-            } else {
-                x.price = '￥' + fmtNumber(data.price);
-            }
+            if (eval(data.price) == 0) x.price = '無料';
+            else x.price = '￥' + fmtNumber(data.price);
             x.category = data.genres[0];
             for (i = 1; i < data.genres.length; i++) x.category = x.category + '、 ' + data.genres[i];
             x.pubdate = data.releaseDate.replace(/-/g, '/');
