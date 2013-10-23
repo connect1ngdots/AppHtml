@@ -51,7 +51,7 @@
           'appsize', 'moveos', 'os', 'gamecenter', 'univ', 'lang',
           'image1', 'image2', 'image3', 'image4', 'image5',
           'univimage1', 'univimage2', 'univimage3', 'univimage4', 'univimage5',
-          'badgeL', 'badgeS', 'textonly'];
+          'badgeL', 'badgeS', 'textonly', 'today'];
 
     // メイン処理（非同期実行を防ぐ為にTimerを利用）
     var timerId = setInterval(function () {
@@ -576,6 +576,11 @@
                 x.textonly = '<a href="' + x.url + '" target="itunes_store">' + x.name + ' - ' + x.artist + '</a>';
             }
         }
+        var now = new Date();
+        var y = now.getFullYear();
+        var m = now.getMonth() + 1;
+        var dd = now.getDate();
+        x.today = y + "." + m + "." + dd;
         return x;
     }
 

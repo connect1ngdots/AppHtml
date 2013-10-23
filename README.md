@@ -117,6 +117,7 @@ GameCenter対応            | ${gamecenter}       | iPhone/iPadアプリ
 スクリーンショット(univ)3 | ${univimage3}       | iPhone/iPadアプリ
 スクリーンショット(univ)4 | ${univimage4}       | iPhone/iPadアプリ
 スクリーンショット(univ)5 | ${univimage5}       | iPhone/iPadアプリ
+実行日                    | ${today}           | すべて
 
 
 既知の問題
