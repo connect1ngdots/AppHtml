@@ -100,6 +100,7 @@ a:link.sig {
         <input type="number" id="conf_mac_scs" /><br>
         <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
       </div>
+      <a href="javascript:showStringifiedConf();" data-role="button" data-theme="b">Import/Export</a>
     </div>
   </div>
 </div>
@@ -141,6 +142,23 @@ a:link.sig {
     <span id="template-editor-delete-btn-area">
       <a href="javascript:deleteTemplate();" data-role="button" data-theme="d">Delete</a>
     </span>
+  </div>
+</div>
+
+<div id="stringified-conf" data-role="page" data-title="AppHtmlWeb">
+  <div data-role="header" data-position="fixed">
+    <a href="javascript:closeStringifiedConf();" data-role="button" data-icon="flat-cross" data-iconpos="notext"></a>
+    <h2>Import/Export</h2>
+  </div>
+  <div data-role="content">
+    <div data-role="fieldcontain">
+      <label for="stringified-data">
+        Export: テキストフィールドのテキストをコピーしてください。<br>
+        Import: テキストフィールドの内容をインポートするデータに置換して [Import] ボタンをタップしてください。
+      </label>
+      <input type="text" id="stringified-data" data-clear-btn="true" />
+    </div>
+    <a href="javascript:importConf();" data-role="button" data-theme="b">Import</a>
   </div>
 </div>
 
