@@ -1,6 +1,6 @@
 /*
  * ApphtmlWeb.js
- * @version 2.0
+ * @version 2.1
  * @author Toshiya NISHIO(http://www.toshiya240.com)
  */
 
@@ -76,7 +76,68 @@ function saveConfig() {
   $("#template").selectmenu("refresh");
 
   return true;
-};
+}
+
+function showStringifiedConf() {
+  var conf_aff = storage.get("apphtml_conf_aff");
+  var conf_count = storage.get("apphtml_conf_count");
+  if (conf_count == "") conf_count = 8;
+  var conf_iphone_scs = storage.get("apphtml_conf_iphone_scs");
+  if (conf_iphone_scs == "") conf_iphone_scs = 288;
+  var conf_iphone_ipd = storage.get("apphtml_conf_iphone_ipd");
+  if (conf_iphone_ipd == "") conf_iphone_ipd = 1.5;
+  var conf_ipad_scs = storage.get("apphtml_conf_ipad_scs");
+  if (conf_ipad_scs == "") conf_ipad_scs = 432;
+  var conf_ipad_ipd = storage.get("apphtml_conf_ipad_ipd");
+  if (conf_ipad_ipd == "") conf_ipad_ipd = 0.67;
+  var conf_mac_scs = storage.get("apphtml_conf_mac_scs");
+  if (conf_mac_scs == "") conf_mac_scs = 480;
+  conf_template = storage.get("apphtml_conf_template");
+  if (conf_template == "") conf_template = preset();
+
+  var conf = {};
+  conf.conf_aff = conf_aff;
+  conf.conf_count = conf_count;
+  conf.conf_iphone_scs = conf_iphone_scs;
+  conf.conf_iphone_ipd = conf_iphone_ipd;
+  conf.conf_ipad_scs = conf_ipad_scs;
+  conf.conf_ipad_ipd = conf_ipad_ipd;
+  conf.conf_mac_scs = conf_mac_scs;
+  conf.conf_template = conf_template;
+
+  $("#stringified-data").val(JSON.stringify(conf));
+
+  $.mobile.changePage('#stringified-conf', {transition:'pop'});
+}
+
+function closeStringifiedConf() {
+  $.mobile.changePage('#conf', {transition:'pop', reverse:true});
+}
+
+function importConf() {
+  var stringifiedConf = "";
+  try {
+      stringifiedConf = JSON.parse($("#stringified-data").val());
+  } catch (e) {
+      showMessage("パースに失敗しました。(" + e + ")");
+      return;
+  }
+  storage.set("apphtml_conf_aff", stringifiedConf.conf_aff);
+  storage.set("apphtml_conf_count", stringifiedConf.conf_count);
+  storage.set("apphtml_conf_out", stringifiedConf.conf_out);
+  storage.set("apphtml_conf_iphone_scs", stringifiedConf.conf_iphone_scs);
+  storage.set("apphtml_conf_iphone_ipd", stringifiedConf.conf_iphone_ipd);
+  storage.set("apphtml_conf_ipad_scs", stringifiedConf.conf_ipad_scs);
+  storage.set("apphtml_conf_ipad_ipd", stringifiedConf.conf_ipad_ipd);
+  storage.set("apphtml_conf_mac_scs", stringifiedConf.conf_mac_scs);
+  storage.set("apphtml_conf_template", stringifiedConf.conf_template);
+
+  reloadConfig();
+  setTemplateSelection();
+  $("#template").selectmenu("refresh");
+
+  showMessage("インポートに成功しました。");
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // テンプレート定義
@@ -118,7 +179,7 @@ function saveTemplate() {
   var name = $("#template-editor-name").val();
   var content = $("#template-editor-content").val();
   if (!name || !content) {
-    showError("名前と内容を入力してください。");
+    showMessage("名前と内容を入力してください。");
     return false;
   }
   var title = $("#template-list-title").text();
@@ -438,7 +499,7 @@ function insertPlaceholder(index) {
 ////////////////////////////////////////////////////////////////////////////////
 // その他
 
-function showError(msg) {
+function showMessage(msg) {
   $("#error_msg").text(msg);
   $dialog = $("<a href='#error_page' data-rel='dialog'></a>");
   $dialog.get(0).click();
