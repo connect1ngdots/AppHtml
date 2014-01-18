@@ -88,9 +88,10 @@
         } else {
             src = "http://itunes.apple.com/jp/search?term=" + encodeURIComponent(kwd) + "&lang=ja_jp&country=JP&entity=" + knd + "&limit=" + cnt;
             // Mac アプリが検索できない件の暫定対処(開発元での検索は不可となる)
-            if (knd == "macSoftware") {
-                src += "&attribute=allTrackTerm";
-            }
+// 2014.1.19時点で以下コード不要。次回の同事象に備えコメントアウトにとどめる。
+//            if (knd == "macSoftware") {
+//                src += "&attribute=allTrackTerm";
+//            }
         }
 
         /*********** iTunes Search APIの戻り値（ここから）***********
