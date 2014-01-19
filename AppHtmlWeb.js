@@ -92,6 +92,8 @@ function showStringifiedConf() {
   if (conf_ipad_ipd == "") conf_ipad_ipd = 0.67;
   var conf_mac_scs = storage.get("apphtml_conf_mac_scs");
   if (conf_mac_scs == "") conf_mac_scs = 480;
+  var conf_out = storage.get("apphtml_conf_out");
+  if (conf_out == "") conf_out = "popup";
   conf_template = storage.get("apphtml_conf_template");
   if (conf_template == "") conf_template = preset();
 
@@ -103,6 +105,7 @@ function showStringifiedConf() {
   conf.conf_ipad_scs = conf_ipad_scs;
   conf.conf_ipad_ipd = conf_ipad_ipd;
   conf.conf_mac_scs = conf_mac_scs;
+  conf.conf_out = conf_out;
   conf.conf_template = conf_template;
 
   $("#stringified-data").val(JSON.stringify(conf));
