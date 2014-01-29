@@ -403,9 +403,13 @@
             if (phg != "") x.url = PHGUrl(data.trackViewUrl, phg);
             else x.url = data.trackViewUrl;
             x.preview = data.previewUrl;
-            if (eval(data.trackPrice) == 0) x.price = '無料';
-            else if (!data.trackPrice) {x.price = 'レンタルのみ';}
-            else x.price = '￥' + fmtNumber(data.trackPrice);
+            if (!data.trackPrice) {
+                x.price = 'レンタルのみ';
+            } else if (data.trackPrice == 0 ) {
+                x.price = '無料';
+            } else {
+                x.price = '￥' + fmtNumber(data.trackPrice);
+            }
             x.category = data.primaryGenreName;
             if (!data.trackTimeMillis) x.playtime = 'データなし';
             else x.playtime = sizeTime(data.trackTimeMillis);
