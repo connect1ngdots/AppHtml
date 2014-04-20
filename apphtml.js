@@ -21,12 +21,7 @@
         fmt = decodeURIComponent(script.fmt);
 
     // 見ているサイトがiTunesWebだった場合
-    if (location.href.indexOf("https://itunes.apple.com/") != -1) {
-        var urlAry = location.href.split("/id");
-        appId = urlAry[1];
-        urlAry = appId.split("?");
-        appId = urlAry[0];
-    }
+    appId = getAppIdFrom(location.href);
 
     // 検索キーワードを取得（選択されたキーワードがある場合にはそっちを優先）
     var kwd = '';
@@ -37,16 +32,12 @@
         else if (d.getSelection) kwd = d.getSelection();
         else kwd = '';
         if (kwd == "") kwd = prompt("What do you want to search?", "");
-        if (kwd.indexOf("https://itunes.apple.com/") != -1) {
-            var urlAry = kwd.split("/id");
-            appId = urlAry[1];
-            urlAry = appId.split("?");
-            appId = urlAry[0];
-        }
         if (kwd == "" || !kwd) {
             prompt('Result', 'Not Found ...');
             return;
         }
+        // iTunesWeb の URL を入力された場合(そうでない場合 appId == "" となる)
+        appId = getAppIdFrom(kwd);
     }
 
     // bookmarkletの予約語（43個）
@@ -82,6 +73,22 @@
             return 0;
         }
     }, 100);
+
+    function getAppIdFrom(urlString) {
+        var appId = '';
+
+        if (urlString.indexOf("https://itunes.apple.com/") != -1) {
+            appId = urlString.split("/id")[1];
+            if (appId) {
+                appId = appId.split("?")[0];
+            }
+            if (!appId) {
+                appId = '';
+            }
+        }
+
+        return appId;
+    }
 
     // iTunes Search API をコールしてJSON形式で値を取得
 
