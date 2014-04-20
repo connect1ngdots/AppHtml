@@ -37,6 +37,12 @@
         else if (d.getSelection) kwd = d.getSelection();
         else kwd = '';
         if (kwd == "") kwd = prompt("What do you want to search?", "");
+        if (kwd.indexOf("https://itunes.apple.com/") != -1) {
+            var urlAry = kwd.split("/id");
+            appId = urlAry[1];
+            urlAry = appId.split("?");
+            appId = urlAry[0];
+        }
         if (kwd == "" || !kwd) {
             prompt('Result', 'Not Found ...');
             return;
