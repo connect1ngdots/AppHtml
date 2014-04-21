@@ -21,12 +21,7 @@
         fmt = decodeURIComponent(script.fmt);
 
     // 見ているサイトがiTunesWebだった場合
-    if (location.href.indexOf("https://itunes.apple.com/") != -1) {
-        var urlAry = location.href.split("/id");
-        appId = urlAry[1];
-        urlAry = appId.split("?");
-        appId = urlAry[0];
-    }
+    appId = getAppIdFrom(location.href);
 
     // 検索キーワードを取得（選択されたキーワードがある場合にはそっちを優先）
     var kwd = '';
@@ -41,6 +36,8 @@
             prompt('Result', 'Not Found ...');
             return;
         }
+        // iTunesWeb の URL を入力された場合(そうでない場合 appId == "" となる)
+        appId = getAppIdFrom(kwd);
     }
 
     // bookmarkletの予約語（43個）
@@ -55,27 +52,52 @@
 
     // メイン処理（非同期実行を防ぐ為にTimerを利用）
     var timerId = setInterval(function () {
-        switch (step) {
-        case 1:
-            step = 0;
-            getWebApi();
-            break;
-        case 2:
-            step = 0;
-            getWidth();
-            break;
-        case 3:
-            step = 0;
-            dispData();
-            break;
-        case 4:
-            while (d.getElementById("bmlt"))
-                d.getElementById("bmlt").parentNode.removeChild(d.getElementById("bmlt"));
-            clearInterval(timerId);
-            timerId = null;
-            return 0;
+        try {
+            switch (step) {
+            case 1:
+                step = 0;
+                getWebApi();
+                break;
+            case 2:
+                step = 0;
+                getWidth();
+                break;
+            case 3:
+                step = 0;
+                dispData();
+                break;
+            case 4:
+                cleanup();
+                return 0;
+            }
+        } catch (e) {
+            alert("Something may be wrong.\n->" + e);
+            cleanup();
         }
     }, 100);
+
+    function cleanup() {
+        while (d.getElementById("bmlt"))
+            d.getElementById("bmlt").parentNode.removeChild(d.getElementById("bmlt"));
+        clearInterval(timerId);
+        timerId = null;
+    }
+
+    function getAppIdFrom(urlString) {
+        var appId = '';
+
+        if (urlString.indexOf("https://itunes.apple.com/") != -1) {
+            appId = urlString.split("/id")[1];
+            if (appId) {
+                appId = appId.split("?")[0];
+            }
+            if (!appId) {
+                appId = '';
+            }
+        }
+
+        return appId;
+    }
 
     // iTunes Search API をコールしてJSON形式で値を取得
 
@@ -116,54 +138,58 @@
                 step = 4;
                 return;
             }
-            //artworkUrl100がないものをresultsから削除
-            for (var i = 0; i < data.results.length; i++) {
-                if (!data.results[i].artworkUrl100) {
-                    data.results.splice(i, 1);
-                    i = i - 1;
+            try {
+                //artworkUrl100がないものをresultsから削除
+                for (var i = 0; i < data.results.length; i++) {
+                    if (!data.results[i].artworkUrl100) {
+                        data.results.splice(i, 1);
+                        i = i - 1;
+                    }
                 }
-            }
-            for (var i = 0; i < data.results.length; i++) {
-                json[i] = data.results[i];
-                if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
-                    json[i].description = json[i].description.replace(/\n/g, '<br>');
-                    if (json[i].releaseNotes)
-                        json[i].releaseNotes = json[i].releaseNotes.replace(/\n/g, '<br>');
-                    if (!json[i].supportedDevices)
-                        json[i].supportedDevices = "";
+                for (var i = 0; i < data.results.length; i++) {
+                    json[i] = data.results[i];
+                    if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
+                        json[i].description = json[i].description.replace(/\n/g, '<br>');
+                        if (json[i].releaseNotes)
+                            json[i].releaseNotes = json[i].releaseNotes.replace(/\n/g, '<br>');
+                        if (!json[i].supportedDevices)
+                            json[i].supportedDevices = "";
+                    }
+                    if (knd == "movie") {
+                        if (json[i].shortDescription)
+                            json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
+                        if (json[i].longDescription)
+                            json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');
+                    }
+                    var z = json[i],
+                        x = new Array(bmAry);
+                    if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
+                        if (eval(z.price) == 0) x.price = '無料';
+                        else x.price = '￥' + fmtNumber(z.price);
+                        x.appname = z.trackCensoredName;
+                        x.title = x.appname + '（' + x.price + '）';
+                    }
+                    if (knd == "song") {
+                        x.title = z.trackCensoredName + ' （' + z.artistName + '）';
+                    }
+                    if (knd == "album") {
+                        x.title = z.collectionCensoredName + ' （' + z.artistName + '）';
+                    }
+                    if (knd == "movie") {
+                        x.title = z.trackCensoredName + ' （' + z.artistName + '）';
+                    }
+                    if (knd == "ebook") {
+                        x.title = z.trackCensoredName + ' （' + z.artistName + '）';
+                    }
+                    var r = prompt('【' + (i + 1) + '/' + data.results.length + '】' + x.title, 'OK→次, キャンセル→決定');
+                    if (!r) {
+                        hitApp = i;
+                        step = 2;
+                        return;
+                    }
                 }
-                if (knd == "movie") {
-                    if (json[i].shortDescription)
-                        json[i].shortDescription = json[i].shortDescription.replace(/\n/g, '<br>');
-                    if (json[i].longDescription)
-                        json[i].longDescription = json[i].longDescription.replace(/\n/g, '<br>');
-                }
-                var z = json[i],
-                    x = new Array(bmAry);
-                if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
-                    if (eval(z.price) == 0) x.price = '無料';
-                    else x.price = '￥' + fmtNumber(z.price);
-                    x.appname = z.trackCensoredName;
-                    x.title = x.appname + '（' + x.price + '）';
-                }
-                if (knd == "song") {
-                    x.title = z.trackCensoredName + ' （' + z.artistName + '）';
-                }
-                if (knd == "album") {
-                    x.title = z.collectionCensoredName + ' （' + z.artistName + '）';
-                }
-                if (knd == "movie") {
-                    x.title = z.trackCensoredName + ' （' + z.artistName + '）';
-                }
-                if (knd == "ebook") {
-                    x.title = z.trackCensoredName + ' （' + z.artistName + '）';
-                }
-                var r = prompt('【' + (i + 1) + '/' + data.results.length + '】' + x.title, 'OK→次, キャンセル→決定');
-                if (!r) {
-                    hitApp = i;
-                    step = 2;
-                    return;
-                }
+            } catch (e) {
+                alert("Something may be wrong. \n->" + e);
             }
             step = 4;
         }
