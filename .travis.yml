@@ -1,0 +1,15 @@
+language: JavaScript
+branches:
+  except:
+    - master
+    - gh-pages
+install: echo "Nothing to be installed."
+script: echo "Nothing to be tested(currently)."
+deploy:
+  provider: heroku
+  api_key:
+    secure: TGeir1lZiUUeyW6n/1SBkB9oyl1XPnnrN3WiH+Es8r/Ptprk+jdxYSrL6uLdl9gJj5+nTsJMby7KN1dBiN9ZEevAh6Pxd9juymyN0s2iGKZVLdeaV9TcowyQOaRTabfxVxXebLZbfNdf79iCrxvyz2ur9VMEC2aKQbxQ5u+JUIQ=
+  app: apphtml-dev
+  on:
+    repo: hondamarlboro/AppHtml
+    branch: develop
