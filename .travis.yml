@@ -1,0 +1,19 @@
+language: ruby
+rvm:
+- 2.0.0
+branches:
+  except:
+  - master
+  - gh-pages
+install: echo "Nothing to be installed."
+script: echo "Nothing to be tested(currently)."
+deploy:
+  provider: heroku
+  api_key:
+    secure: phXEVu7oldEDXPTp9n2UYpaLxTs66TCd6Vhy9KTnM9xF8AYyUCItQCWLJX6IIdu+nmjlPwmbFxQ1bdgypMSThU63bw6GnUYW1lgPCrTBLvRmT/R5mkF8hsuk3kold40bRWN0yplTZrpJlmAKLjDhxBdqEoirIfDa2Jj3lMcHTec=
+  app:
+    deploy/hondamarlboro: appthml-h
+    deploy/feelingplace: apphtml-f
+    deploy/toshiya240: apphtml-t
+  on:
+    repo: connect1ngdots/AppHtml
