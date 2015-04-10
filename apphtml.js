@@ -372,6 +372,17 @@
             if (out == "drafts") {
                 w.location = 'drafts://x-callback-url/create?text=' + encodeURIComponent(x);
             }
+            // 出力方法ごとの処理（Drafts 4で新規作成）
+            if (out == "drafts4") {
+                w.location = 'drafts4://x-callback-url/create?text=' + encodeURIComponent(x);
+            }
+            // 出力方法ごとの処理（AmeEditorに送る）
+            if (out == "ameeditor") {
+                w.location = 'ameeditor://insert?text=' + encodeURIComponent(x);
+            }            // 出力方法ごとの処理（SLPRO Xに送る）
+            if (out == "slpro-x") {
+                w.location = 'slpro-x://?q=' + encodeURIComponent(x);
+            }
         }
         step = 4;
     }
