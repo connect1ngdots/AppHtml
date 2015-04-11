@@ -323,7 +323,10 @@ var outParams = {
   "PressSync Pro": "presssync",
   "Textwell": "textwell",
   "はてなブログ（新規投稿）": "hatenablog",
-  "Drafts": "drafts"
+  "Drafts": "drafts",
+  "Drafts 4": "drafts4",
+  "AmeEditor": "ameeditor",
+  "SLPRO X": "slpro-x"
 };
 
 function setOutSelection() {
