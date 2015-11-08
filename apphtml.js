@@ -140,12 +140,13 @@
             }
             try {
                 //artworkUrl100がないものをresultsから削除
-                for (var i = 0; i < data.results.length; i++) {
-                    if (!data.results[i].artworkUrl100) {
-                        data.results.splice(i, 1);
-                        i = i - 1;
-                    }
-                }
+                //2015/11/8 緊急パッチ。仕様変更の見極めが必要なためコメントアウトにとどめる。
+                //for (var i = 0; i < data.results.length; i++) {
+                //    if (!data.results[i].artworkUrl100) {
+                //        data.results.splice(i, 1);
+                //        i = i - 1;
+                //    }
+                //}
                 for (var i = 0; i < data.results.length; i++) {
                     json[i] = data.results[i];
                     if (knd == "software" || knd == "iPadSoftware" || knd == "macSoftware") {
@@ -503,7 +504,15 @@
             x.pubdate = data.releaseDate.replace(/-/g, '/');
             x.pubdate = x.pubdate.replace(/T.*/g, '');
             x.icon60url = data.artworkUrl60;
-            x.icon100url = data.artworkUrl100;
+            //2015/11/8緊急パッチ
+            if (data.artworkUrl100) {
+                x.icon100url = data.artworkUrl100;
+            } else if (data.artworkUrl512) {
+                x.icon100url = data.artworkUrl512;
+            } else {
+                x.icon100url = data.artworkUrl60;
+            }
+            //x.icon100url = data.artworkUrl100;
             x.artist = data.artistName;
             if (phg != "") x.artisturl = PHGUrl(data.artistViewUrl, phg);
             else x.artisturl = data.artistViewUrl;
