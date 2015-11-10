@@ -1,0 +1,28 @@
+language: ruby
+rvm:
+- 2.0.0
+branches:
+  except:
+  - master
+  - gh-pages
+install: echo "Nothing to be installed."
+script: echo "Nothing to be tested(currently)."
+deploy:
+  provider: heroku
+  api_key:
+    secure: phXEVu7oldEDXPTp9n2UYpaLxTs66TCd6Vhy9KTnM9xF8AYyUCItQCWLJX6IIdu+nmjlPwmbFxQ1bdgypMSThU63bw6GnUYW1lgPCrTBLvRmT/R5mkF8hsuk3kold40bRWN0yplTZrpJlmAKLjDhxBdqEoirIfDa2Jj3lMcHTec=
+  app:
+    deploy/hondamarlboro: apphtml-h
+    deploy/feelingplace: apphtml-f
+    deploy/toshiya240: apphtml-t
+  on:
+    repo: connect1ngdots/AppHtml
+notifications:
+  email: false
+  hipchat:
+    rooms:
+      secure: i9covoGjknjHT6aTwvXqIsUCAXmwXWJDXRKxZXVFJXDlowDRaEovYD0W3QO5ruRhZXRyA07XlL0FmjxujYcRC5Q5+Yzi6ElxxYiK5mTrbcwH+iqzSvBS3Pv7fyd/roB3oJxrzHafOMSuiQo9+/y1UggdhSgADrd8u0J+r9oYrqk=
+    template:
+    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}
+      (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
+    format: html
