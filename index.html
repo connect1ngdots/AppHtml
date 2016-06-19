@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 <title>AppHtmlWeb</title>
 
-<link rel="stylesheet" type="text/css" href="jquery.mobile.flatui.css" />
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<!--link rel="stylesheet" type="text/css" href="jquery.mobile.flatui.css" /-->
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 <script src="AppHtmlWeb.js"></script>
 
@@ -20,15 +21,21 @@ li.ui-li a:link {
 }
 a:link.sig {
   color:#cc6611;
+} 
+
+.noshadow * {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
 }
 </style>
 </head>
-<body>
+<body class="noshadow">
 
 <div data-role="page" id="main" data-title="AppHtmlWeb">
   <div data-role="header" data-position="fixed">
     <h2>AppHtmlWeb</h2>
-    <a data-role="button" data-icon="flat-settings" class="ui-btn-right"
+    <a data-role="button" data-icon="gear" class="ui-btn-right"
         onclick="javascript:$.mobile.changePage('#conf', {transition:'flip'});">設定</a>
   </div>
   <div data-role="content">
@@ -46,16 +53,16 @@ a:link.sig {
 
 <div data-role="page" id="conf" data-title="Settings">
   <div data-role="header" data-position="fixed">
-    <a data-role="button" data-icon="flat-cross"
+    <a data-role="button" data-icon="delete"
         onclick="javascript:reloadConfig();$.mobile.changePage('#main', {transition:'flip', reverse:true});">キャンセル</a>
     <h2>設定</h2>
-    <a data-role="button" data-icon="flat-checkround"
+    <a data-role="button" data-icon="check"
         onclick="javascript:if(saveConfig()) $.mobile.changePage('#main', {transition:'flip', reverse:true});">保存</a>
   </div>
   <div data-role="content">
-    <div data-role="fieldcontain">
+    <div>
       <label for="conf_aff">アフィリエイトID(トークン)</label>
-      <input type="text" id="conf_aff" /><br>
+      <input type="text" id="conf_aff" />
       <span style="font-size:12px">アフィリエイトリンクを生成する場合に指定してください</span><br>
       <br>
 
@@ -78,27 +85,29 @@ a:link.sig {
       <br>
 
       <label>その他</label>
-      <div data-role="collapsible">
-        <h3>iPhone App</h3>
-        <label for="conf_iphone_scs">スクリーンショット画像長辺ピクセル</label>
-        <input type="number" id="conf_iphone_scs" /><br>
-        <label for="conf_iphone_ipd">ユニバーサルアプリの拡大率(倍)</label>
-        <input type="number" id="conf_iphone_ipd" /><br>
-        <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
-      </div>
-      <div data-role="collapsible">
-        <h3>iPad App</h3>
-        <label for="conf_ipad_scs">スクリーンショット画像長辺ピクセル</label>
-        <input type="number" id="conf_ipad_scs" />
-        <label for="conf_ipad_ipd">ユニバーサルアプリの拡大率(倍)</label>
-        <input type="number" id="conf_ipad_ipd" /><br>
-        <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
-      </div>
-      <div data-role="collapsible">
-        <h3>Mac App</h3>
-        <label for="conf_mac_scs">スクリーンショット画像長辺ピクセル</label>
-        <input type="number" id="conf_mac_scs" /><br>
-        <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
+      <div data-role="collapsibleset">
+        <div data-role="collapsible">
+          <h3>iPhone App</h3>
+          <label for="conf_iphone_scs">スクリーンショット画像長辺ピクセル</label>
+          <input type="number" id="conf_iphone_scs" /><br>
+          <label for="conf_iphone_ipd">ユニバーサルアプリの拡大率(倍)</label>
+          <input type="number" id="conf_iphone_ipd" /><br>
+          <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
+        </div>
+        <div data-role="collapsible">
+          <h3>iPad App</h3>
+          <label for="conf_ipad_scs">スクリーンショット画像長辺ピクセル</label>
+          <input type="number" id="conf_ipad_scs" />
+          <label for="conf_ipad_ipd">ユニバーサルアプリの拡大率(倍)</label>
+          <input type="number" id="conf_ipad_ipd" /><br>
+          <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
+        </div>
+        <div data-role="collapsible">
+          <h3>Mac App</h3>
+          <label for="conf_mac_scs">スクリーンショット画像長辺ピクセル</label>
+          <input type="number" id="conf_mac_scs" /><br>
+          <span style="font-size:12px">アプリのスクリーンショット画像URLを利用する場合に指定してください</span>
+        </div>
       </div>
       <a href="javascript:showStringifiedConf();" data-role="button" data-theme="b">Import/Export</a>
     </div>
@@ -110,7 +119,7 @@ a:link.sig {
     <a data-role="button" data-icon="arrow-l" data-iconpos="notext"
         onclick="javascript:$.mobile.changePage('#conf', {transition:'slide', reverse:true});"></a>
     <h2 id="template-list-title"></h2>
-    <a href="javascript:addTemplate();" data-role="button" data-icon="flat-plus" data-iconpos="notext"></a>
+    <a href="javascript:addTemplate();" data-role="button" data-icon="plus" data-iconpos="notext"></a>
   </div>
   <div data-role="content">
     <ul id="template-list-view" data-role="listview" data-icon="edit" class="ui-icon-alt" >
@@ -125,10 +134,10 @@ a:link.sig {
     </ul>
   </div>
   <div data-role="header" data-position="fixed">
-    <a data-role="button" data-icon="flat-cross" data-iconpos="notext"
+    <a data-role="button" data-icon="delete" data-iconpos="notext"
         data-rel="back" data-direction="reverse"></a>
     <h2 id="template-editor-title"></h2>
-    <a href="#template-editor-panel" data-role="button" data-icon="flat-menu" data-iconpos="notext"></a>
+    <a href="#template-editor-panel" data-role="button" data-icon="bars" data-iconpos="notext"></a>
   </div>
   <div data-role="content">
     <div data-role="fieldcontain">
@@ -147,7 +156,7 @@ a:link.sig {
 
 <div id="stringified-conf" data-role="page" data-title="AppHtmlWeb">
   <div data-role="header" data-position="fixed">
-    <a href="javascript:closeStringifiedConf();" data-role="button" data-icon="flat-cross" data-iconpos="notext"></a>
+    <a href="javascript:closeStringifiedConf();" data-role="button" data-icon="delete" data-iconpos="notext"></a>
     <h2>Import/Export</h2>
   </div>
   <div data-role="content">
